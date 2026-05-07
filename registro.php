@@ -155,13 +155,6 @@ ini_set('display_errors', 1);
         </div>
     </header>
     <main>
-         <nav>
-            <ul class="navList">
-                <li><a style='text-decoration: none; color:black;' href="busquedaVuelos.php">Vuelos</a></li>
-                <li><a style='text-decoration: none; color:black;' href="renting.php">Alquiler de coches</a></li>
-                <li><a style='text-decoration: none; color:black;' href="ferrys.php">Ferrys</a></li>
-            </ul>
-        </nav>
             <div id="formulario">
                 <h2>Formulario de Registro</h2>
                 <form method="POST" id="registerForm">
