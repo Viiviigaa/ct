@@ -56,8 +56,6 @@
 
         #textoCabecera {
             margin: 0;
-            font-size: 1.2rem;
-            font-weight: 700;
             color: #1e293b;
             white-space: nowrap;
         }
@@ -184,9 +182,7 @@
     </style>
 </head>
 <body>
-
     <header>
-        <!-- Icono menú lateral (igual que index.php) -->
         <img src="static/img/lista.png"
              data-bs-toggle="offcanvas"
              data-bs-target="#offcanvasExample"
@@ -214,8 +210,8 @@
         </div>
 
         <!-- Logo + título centrado -->
-        <a href="" id="menuPrincipial">
-            <img src="static/img/logo.png" alt="logo" id="logo">
+        <a href="index.php" id="menuPrincipial">
+            <img src="static/img/logo.png" alt="logo" id="logo" width="75px" height="auto">
             <h3 id="textoCabecera">Canary Travel</h3>
         </a>
 
