@@ -20,7 +20,7 @@ function enviarEmail($email, $asunto, $body, $attach = null)
 
         // --- Remitente ---
         // Usamos el mismo correo de Gmail para evitar que se marque como Spam
-        $mail->setFrom(getenv('SMTP_EMAIL'), 'Tu App');
+        $mail->setFrom(getenv('SMTP_EMAIL'), 'Canary Travel');
 
         // --- Destinatarios ---
         if (is_array($email)) {
@@ -42,10 +42,9 @@ function enviarEmail($email, $asunto, $body, $attach = null)
         $mail->Body    = $body;
 
         $mail->send();
-        echo 'El mensaje ha sido enviado correctamente. Revise su bandeja de entrada.';
-        echo "<strong><a href='login.php'>Iniciar sesión</a></strong>";
-
+        return true;
     } catch (Exception $e) {
-        echo "Error al enviar el mensaje: {$mail->ErrorInfo}";
+        error_log('PHPMailer error: ' . $mail->ErrorInfo);
+        return false;
     }
 }

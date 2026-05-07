@@ -1,6 +1,10 @@
 <?php   
 include 'conectar.php';
 include 'enviarEmail.php';
+session_start();
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -15,11 +19,6 @@ include 'enviarEmail.php';
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script> 
 </head>
 <?php
-session_start();
-
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
-
     $errores = [];
     $correcta = false;
 
