@@ -1,3 +1,7 @@
+<?php   
+include 'conectar.php';
+include 'enviarEMail.php';
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,12 +15,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script> 
 </head>
 <?php
-
-include 'conectar.php';
-include 'enviarEMail.php';
-
 session_start();
-
 
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
@@ -118,7 +117,7 @@ ini_set('display_errors', 1);
                 'fechaNac' => $fechaNac,
                 'rol' => "base"
             ]);
-            //enviarEmail($correo,'Confirmación de registro', 'Su cuenta ha sido registrada con éxito','');
+            enviarEmail($correo,'Confirmación de registro', 'Su cuenta ha sido registrada con éxito','');
             header('Location:registroCompletado.php');
         } catch (PDOException $e) {
             echo "Ha ocurrido un error al conectar con base de datos";

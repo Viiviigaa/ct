@@ -52,6 +52,13 @@
         ?>
     </header>
     <main>
+        <nav>
+            <ul class="navList">
+                <li><a style='text-decoration: none; color:black;' href="busquedaVuelos.php">Vuelos</a></li>
+                <li><a style='text-decoration: none; color:black;' href="renting.php">Alquiler de coches</a></li>
+                <li><a style='text-decoration: none; color:black;' href="ferrys.php">Ferrys</a></li>
+            </ul>
+        </nav>
         <br>
         <h3 style='text-align: center' >Encuentra tu ferry para moverte entre las islas con facilidad</h3>
         <div id="buscador" class="container mt-4">

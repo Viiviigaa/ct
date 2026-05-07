@@ -6,6 +6,38 @@
     <title>Buscador - Canary Travel</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
+<header>   
+        <img src="static/img/lista.png" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample" width="30" style="cursor: pointer;">     
+        <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">  
+            <div class="offcanvas-header">    
+                <h5 class="offcanvas-title" id="offcanvasExampleLabel">Menú Lateral</h5>    
+                <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Cerrar"></button>  
+            </div>  
+            <div class="offcanvas-body d-flex flex-column">
+                <ul class="list-group">
+                    <li class="list-group-item"><a href="informacionCuenta.php">Mi cuenta</a></li>
+                    <li class="list-group-item"><a href="misReservas.php">Mis Reservas</a></li>
+                    <li class="list-group-item"><a href="recomendaciones.php">Recomendaciones</a></li>
+                </ul>
+                <ul class="list-group mt-auto">
+                    <li class="list-group-item"><a href="logout.php" style='text-decoration: none; color:black'>Cerrar sesion</a></li>
+                </ul>
+            </div> 
+        </div>
+        <a href="index.php" id="menuPrincipial" style="text-decoration: none; color: inherit; display: flex; align-items: center;">
+            <img src="static/img/logo.png" alt="logo" id="logo" width="50">
+            <h3 id="textoCabecera" style="margin-left: 10px;">Canary Travel</h3>
+        </a>
+        <?php
+        if (!isset($_SESSION['usuario'])) {
+            echo "<div class='logs'>
+                <a href='empresas.php' class='btn btn-primary'>Empresas</a>
+                <a href='sesion.php' class='btn btn-primary'>Iniciar sesión</a>
+                <a href='registro.php' class='btn btn-primary'>Registrarse</a>
+            </div>";
+        }
+    ?>
+</header>
 <body class="bg-slate-100 min-h-screen flex items-center justify-center p-6">
 
     <div class="bg-white p-8 rounded-[2.5rem] shadow-xl border border-slate-200 w-full max-w-2xl">

@@ -159,7 +159,7 @@
                                     $imagenes = explode(";", $coche['fotos']);
                                     foreach($imagenes as $index => $img) {
                                         $activeClass = ($index === 0) ? 'active' : '';
-                                        $rutaImg = "static/img/" . trim($img);
+                                        $rutaImg = trim($img);
                                         echo "
                                         <div class='carousel-item {$activeClass}'>
                                             <img src='{$rutaImg}' class='img-fluid w-100' style='height: 250px; object-fit: cover;' alt='vehículo'>
