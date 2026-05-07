@@ -26,7 +26,7 @@
             align-items: center;
             justify-content: space-between;
             padding: 10px 20px;
-            background-color: #ffffff;
+            background-color: lightblue;
             border-bottom: 1px solid #e2e8f0;
             box-shadow: 0 1px 4px rgba(0,0,0,0.06);
             position: sticky;
