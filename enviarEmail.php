@@ -1,41 +1,51 @@
 <?php
-function enviarEmail($email, $asunto, $body, $attach)
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+
+require 'vendor/autoload.php';
+
+function enviarEmail($email, $asunto, $body, $attach = null)
 {   
-    require './PHPMailer-master/src/Exception.php';
-    require './PHPMailer-master/src/PHPMailer.php';
-    require './PHPMailer-master/src/SMTP.php';
-    $recipients = $email;
-    $mail = new PHPMailer();
-    $mail->isSMTP();
-    $mail->Mailer = "SMTP";
-    $mail->SMTPAuth = true;
-    $mail->isHTML(true);
-    $mail->SMTPAutoTLS = false;
-    $mail->Port = 25;
-    $mail->CharSet = 'UTF-8';
-    $mail->Host = "localhost";
-    $mail->Username = "victor";
-    $mail->Password = "12345678";
-    $mail->setFrom('victor@informaticascarlatti.es');
+    $mail = new PHPMailer(true);
 
-    if (isset($attach)) {
-        $mail->addAttachment($attach);
-    }
+    try {
+        $mail->isSMTP();
+        $mail->Host       = 'smtp.gmail.com';
+        $mail->SMTPAuth   = true;
+        $mail->Username   = getenv('SMTP_EMAIL');   
+        $mail->Password   = getenv('SMTP_PASSWORD');
+        $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS; 
+        $mail->Port       = 587; 
+        $mail->CharSet    = 'UTF-8';
 
-    if (is_array($email)) {
-        foreach ($recipients as $email) {
+        // --- Remitente ---
+        // Usamos el mismo correo de Gmail para evitar que se marque como Spam
+        $mail->setFrom(getenv('SMTP_EMAIL'), 'Tu App');
+
+        // --- Destinatarios ---
+        if (is_array($email)) {
+            foreach ($email as $direccion) {
+                $mail->addAddress($direccion);
+            }
+        } else {
             $mail->addAddress($email);
         }
-    } else {
-        $mail->addAddress($email);
-    }
-    $mail->Subject = $asunto;
-    $mail->Body = $body;
 
-    if (!$mail->send()) {
-        echo $mail->ErrorInfo;
-    } else {
+        // --- Adjuntos ---
+        if ($attach !== null) {
+            $mail->addAttachment($attach);
+        }
+
+        // --- Contenido ---
+        $mail->isHTML(true);
+        $mail->Subject = $asunto;
+        $mail->Body    = $body;
+
+        $mail->send();
         echo 'El mensaje ha sido enviado correctamente. Revise su bandeja de entrada.';
         echo "<strong><a href='login.php'>Iniciar sesión</a></strong>";
+
+    } catch (Exception $e) {
+        echo "Error al enviar el mensaje: {$mail->ErrorInfo}";
     }
 }

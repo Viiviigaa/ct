@@ -53,6 +53,13 @@
         ?>
     </header>
     <main>
+        <nav>
+            <ul class="navList">
+                <li><a style='text-decoration: none; color:black;' href="busquedaVuelos.php">Vuelos</a></li>
+                <li><a style='text-decoration: none; color:black;' href="renting.php">Alquiler de coches</a></li>
+                <li><a style='text-decoration: none; color:black;' href="ferrys.php">Ferrys</a></li>
+            </ul>
+        </nav>
         <br>
         <h3 style='text-align: center'>Encuentra tu coche de alquiler al mejor precio</h3>
         <div id="buscador" class="container mt-4">
@@ -149,7 +156,7 @@
                                 <div id='{$carouselId}' class='carousel slide'>
                                     <div class='carousel-inner'>";
                                     
-                                    $imagenes = explode(",", $coche['fotos']);
+                                    $imagenes = explode(";", $coche['fotos']);
                                     foreach($imagenes as $index => $img) {
                                         $activeClass = ($index === 0) ? 'active' : '';
                                         $rutaImg = "static/img/" . trim($img);

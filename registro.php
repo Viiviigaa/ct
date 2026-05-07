@@ -156,66 +156,71 @@ ini_set('display_errors', 1);
             <button class="btn btn-primary"><a href="registro.php" style='text-decoration: none; color:white; width:150px'>Registrarse</a></button>
         </div>
     </header>
+    <main>
+         <nav>
+            <ul class="navList">
+                <li><a style='text-decoration: none; color:black;' href="busquedaVuelos.php">Vuelos</a></li>
+                <li><a style='text-decoration: none; color:black;' href="renting.php">Alquiler de coches</a></li>
+                <li><a style='text-decoration: none; color:black;' href="ferrys.php">Ferrys</a></li>
+            </ul>
+        </nav>
+            <div id="formulario">
+                <h2>Formulario de Registro</h2>
+                <form method="POST" id="registerForm">
+            <div class="form-group">
+                <label for="nombreUsuario">Nombre de usuario:</label><br>
+                <input type="text" name="nombreUsuario" placeholder="Nombre Usuario" id="nombreUsuario" class="inputIni" value="<?= htmlspecialchars($_POST['nombreUsuario'] ?? '') ?>">
+                <?= $errores['nombreUsuario'] ?? '' ?>
+            </div>
 
-    <div id="formulario">
-        <h2>Formulario de Registro</h2>
-        <form method="POST" id="registerForm">
-    <div class="form-group">
-        <label for="nombreUsuario">Nombre de usuario:</label><br>
-        <input type="text" name="nombreUsuario" placeholder="Nombre Usuario" id="nombreUsuario" class="inputIni" value="<?= htmlspecialchars($_POST['nombreUsuario'] ?? '') ?>">
-        <?= $errores['nombreUsuario'] ?? '' ?>
+            <div class="form-group">
+                <label for="contrasena">Contraseña:</label><br>
+                <input type="password" name="contrasena" placeholder="Contraseña" id="contrasena" class="inputIni">
+                <?= $errores['contrasena'] ?? '' ?>
+            </div>
+
+            <div class="form-group">
+                <label for="correo">Correo:</label><br>
+                <input type="email" name="correo" placeholder="Correo" id="correo" class="inputIni" value="<?= htmlspecialchars($_POST['correo'] ?? '') ?>">
+                <?= $errores['correo'] ?? '' ?>
+            </div>
+
+            <div class="form-group">
+                <label for="nombre">Nombre Personal:</label><br>
+                <input type="text" name="nombre" placeholder="Nombre" id="nombre" class="inputIni" value="<?= htmlspecialchars($_POST['nombre'] ?? '') ?>">
+                <?= $errores['nombre'] ?? '' ?>
+            </div>
+
+            <div class="form-group">
+                <label for="apellido">Apellidos:</label><br>
+                <input type="text" name="apellido" placeholder="Apellido" id="apellido" class="inputIni" value="<?= htmlspecialchars($_POST['apellido'] ?? '') ?>">
+                <?= $errores['apellido'] ?? '' ?>
+            </div>
+
+            <div class="form-group">
+                <label for="dni">DNI:</label><br>
+                <input type="text" name="dni" placeholder="DNI" id="dni" class="inputIni" value="<?= htmlspecialchars($_POST['dni'] ?? '') ?>">
+                <?= $errores['dni'] ?? '' ?>
+            </div>
+
+            <div class="form-group">
+                <label for="telefono">Telefono:</label><br>
+                <input type="text" name="telefono" placeholder="Telefono" id="telefono" class="inputIni" value="<?= htmlspecialchars($_POST['telefono'] ?? '') ?>">
+                <?= $errores['telefono'] ?? '' ?>
+            </div>
+
+            <div class="form-group">
+                <label for="fechaNac">Fecha Nacimiento:</label><br>
+                <input type="date" name="fechaNac" id="fechaNac" class="inputIni" value="<?= htmlspecialchars($_POST['fechaNac'] ?? '') ?>">
+                <?= $errores['fechaNac'] ?? '' ?>
+            </div>
+
+            <input type="submit" value="Registrarse" id="submitRegister" class=".btn-primary">    
+        </form>    
     </div>
+</main>
+<footer>
 
-    <div class="form-group">
-        <label for="contrasena">Contraseña:</label><br>
-        <input type="password" name="contrasena" placeholder="Contraseña" id="contrasena" class="inputIni">
-        <?= $errores['contrasena'] ?? '' ?>
-    </div>
-
-    <div class="form-group">
-        <label for="correo">Correo:</label><br>
-        <input type="email" name="correo" placeholder="Correo" id="correo" class="inputIni" value="<?= htmlspecialchars($_POST['correo'] ?? '') ?>">
-        <?= $errores['correo'] ?? '' ?>
-    </div>
-
-    <div class="form-group">
-        <label for="nombre">Nombre Personal:</label><br>
-        <input type="text" name="nombre" placeholder="Nombre" id="nombre" class="inputIni" value="<?= htmlspecialchars($_POST['nombre'] ?? '') ?>">
-        <?= $errores['nombre'] ?? '' ?>
-    </div>
-
-    <div class="form-group">
-        <label for="apellido">Apellidos:</label><br>
-        <input type="text" name="apellido" placeholder="Apellido" id="apellido" class="inputIni" value="<?= htmlspecialchars($_POST['apellido'] ?? '') ?>">
-        <?= $errores['apellido'] ?? '' ?>
-    </div>
-
-    <div class="form-group">
-        <label for="dni">DNI:</label><br>
-        <input type="text" name="dni" placeholder="DNI" id="dni" class="inputIni" value="<?= htmlspecialchars($_POST['dni'] ?? '') ?>">
-        <?= $errores['dni'] ?? '' ?>
-    </div>
-
-    <div class="form-group">
-        <label for="telefono">Telefono:</label><br>
-        <input type="text" name="telefono" placeholder="Telefono" id="telefono" class="inputIni" value="<?= htmlspecialchars($_POST['telefono'] ?? '') ?>">
-        <?= $errores['telefono'] ?? '' ?>
-    </div>
-
-    <div class="form-group">
-        <label for="fechaNac">Fecha Nacimiento:</label><br>
-        <input type="date" name="fechaNac" id="fechaNac" class="inputIni" value="<?= htmlspecialchars($_POST['fechaNac'] ?? '') ?>">
-        <?= $errores['fechaNac'] ?? '' ?>
-    </div>
-
-    <input type="submit" value="Registrarse" id="submitRegister" class=".btn-primary">
-</form>
-        
-    </div>
-
-    <footer>
-
-    </footer>
-    
+</footer>  
 </body>
 </html>
