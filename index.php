@@ -129,8 +129,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     .carousel-control-next {
         width: 40px;
     }
+    .active {
+        color: blue !important; /* El color que deseas */
+        font-weight: bold;
+    }
 </style>
-
 <body>
     <header>
         <img src="static/img/lista.png" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample" width="30">
@@ -167,6 +170,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <main>
         <nav>
             <ul class="navList">
+                <li><a class="active" style='text-decoration: none; color:black;' href="index.php">Alojamientos</a></li>
                 <li><a style='text-decoration: none; color:black;' href="busquedaVuelos.php">Vuelos</a></li>
                 <li><a style='text-decoration: none; color:black;' href="renting.php">Alquiler de coches</a></li>
                 <li><a style='text-decoration: none; color:black;' href="ferrys.php">Ferrys</a></li>

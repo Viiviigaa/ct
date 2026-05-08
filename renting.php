@@ -62,6 +62,7 @@
     <main>
         <nav>
             <ul class="navList">
+                <li><a style='text-decoration: none; color:black;' href="index.php">Alojamientos</a></li>
                 <li><a style='text-decoration: none; color:black;' href="busquedaVuelos.php">Vuelos</a></li>
                 <li><a class="active" style='text-decoration: none; color:black;' href="renting.php">Alquiler de coches</a></li>
                 <li><a style='text-decoration: none; color:black;' href="ferrys.php">Ferrys</a></li>
