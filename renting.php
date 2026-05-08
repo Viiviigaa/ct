@@ -215,5 +215,5 @@
         const vuelta = document.getElementById("vuelta");
         const hoy = new Date().toISOString().split('T')[0];
         ida.setAttribute('min', hoy);
-        vuelta.setAttribute('min', hoy);
+        vuelta.setAttribute('min', ida.value);
 </script>
