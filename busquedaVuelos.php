@@ -276,11 +276,11 @@
                 <div class="form-row">
                     <div>
                         <label class="form-label-custom">Fecha Ida</label>
-                        <input type="date" name="fecha" required class="form-control-custom">
+                        <input type="date" name="fecha" required class="form-control-custom" id="ida">
                     </div>
                     <div>
                         <label class="form-label-custom">Fecha Vuelta (Opcional)</label>
-                        <input type="date" name="fecha_vuelta" class="form-control-custom">
+                        <input type="date" name="fecha_vuelta" class="form-control-custom" id="vuelta">
                     </div>
                 </div>
 
@@ -305,10 +305,15 @@
             `;
             btn.disabled = true;
         });
+
+        const ida = document.getElementById("ida");
+        const vuelta = document.getElementById("vuelta");
+        const hoy = new Date().toISOString().split('T')[0];
+        ida.setAttribute('min', hoy);
+        vuelta.setAttribute('min', hoy);
     </script>
     <style>
         @keyframes spin { to { transform: rotate(360deg); } }
     </style>
-
 </body>
 </html>
