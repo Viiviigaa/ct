@@ -67,13 +67,9 @@ ini_set('display_errors', 1);
         </div>  
         <div class="offcanvas-body d-flex flex-column">    
             <ul class="list-group">      
-                <li class="list-group-item"><a href="#">Mi cuenta</a></li> 
-                <li class="list-group-item"><a href="#">Suscripción</a></li> 
-                <li class="list-group-item"><a href="#">Alquiler de coches</a></li>      
-                <li class="list-group-item"><a href="#">Vuelos</a></li>      
-                <li class="list-group-item"><a href="#">Ferrys</a></li>      
-                <li class="list-group-item"><a href="#">Recomendaciones</a></li>  
-                <li class="list-group-item"><a href="#">Contacto</a></li>
+                <li class="list-group-item"><a href="informacionCuenta.php">Mi cuenta</a></li> 
+                <li class="list-group-item"><a href="misReservas.php">Mis reservas</a></li>    
+                <li class="list-group-item"><a href="recomendaciones.php">Recomendaciones</a></li>  
             </ul> 
             <ul class="list-group mt-auto">
                 <li class="list-group-item"><a href="logout.php" style='text-decoration: none; color:black'>Cerrar sesion</a></li>
