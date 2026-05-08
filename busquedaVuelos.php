@@ -218,7 +218,7 @@
 
         <!-- Logo + título centrado -->
         <a href="index.php" id="menuPrincipial">
-            <img src="static/img/logo.png" alt="logo" id="logo" width="75px" height="auto">
+            <img src="static/img/logo.png" alt="logo" id="logo" width="200px" height="auto">
             <h3 id="textoCabecera">Canary Travel</h3>
         </a>
 

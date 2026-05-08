@@ -92,11 +92,11 @@
                     </div>
                     <div class="col-md-2">
                         <label class="form-label fw-bold">Recogida</label>
-                        <input type="date" name="fechaIni" class="form-control" value="<?php echo $_POST['fechaIni'] ?? ''; ?>">
+                        <input type="date" name="fechaIni" id="ida" class="form-control" value="<?php echo $_POST['fechaIni'] ?? ''; ?>">
                     </div>
                     <div class="col-md-2">
                         <label class="form-label fw-bold">Devolución</label>
-                        <input type="date" name="fechaFin" class="form-control" value="<?php echo $_POST['fechaFin'] ?? ''; ?>">
+                        <input type="date" name="fechaFin" id="vuelta"class="form-control" value="<?php echo $_POST['fechaFin'] ?? ''; ?>">
                     </div>
                     <div class="col-md-2">
                         <input class="btn btn-primary w-100" type="submit" name="buscar" value="Buscar">
@@ -210,3 +210,10 @@
     </main>
 </body>
 </html>
+<script>
+        const ida = document.getElementById("ida");
+        const vuelta = document.getElementById("vuelta");
+        const hoy = new Date().toISOString().split('T')[0];
+        ida.setAttribute('min', hoy);
+        vuelta.setAttribute('min', hoy);
+</script>
