@@ -182,6 +182,10 @@
 
         .offcanvas { z-index: 1045; }
         .offcanvas-backdrop { z-index: 1040; }
+        .active {
+            color: blue !important; /* El color que deseas */
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
@@ -191,30 +195,25 @@
              data-bs-target="#offcanvasExample"
              aria-controls="offcanvasExample"
              width="30">
-         <div class="offcanvas-body d-flex flex-column">
-            <ul class="list-group">
-                <li class="list-group-item <?php echo ($pagina_actual == 'informacionCuenta.php') ? 'active' : ''; ?>">
-                    <a href="informacionCuenta.php" class="nav-link <?php echo ($pagina_actual == 'informacionCuenta.php') ? 'text-white' : 'text-dark'; ?>">
-                        Mi cuenta
-                    </a>
-                </li>
-                <li class="list-group-item <?php echo ($pagina_actual == 'misReservas.php') ? 'active' : ''; ?>">
-                    <a href="misReservas.php" class="nav-link <?php echo ($pagina_actual == 'misReservas.php') ? 'text-white' : 'text-dark'; ?>">
-                        Mis Reservas
-                    </a>
-                </li>
-                <li class="list-group-item <?php echo ($pagina_actual == 'recomendaciones.php') ? 'active' : ''; ?>">
-                    <a href="recomendaciones.php" class="nav-link <?php echo ($pagina_actual == 'recomendaciones.php') ? 'text-white' : 'text-dark'; ?>">
-                        Recomendaciones
-                    </a>
-                </li>
 
-            </ul>    
-            <ul class="list-group mt-auto">
-                <li class="list-group-item">
-                    <a href="logout.php" class="text-danger" style="text-decoration: none;">Cerrar sesión</a>
-                </li>
-            </ul>
+        <!-- Offcanvas lateral -->
+        <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+            <div class="offcanvas-header">
+                <h5 class="offcanvas-title" id="offcanvasExampleLabel">Menú Lateral</h5>
+                <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Cerrar"></button>
+            </div>
+            <div class="offcanvas-body d-flex flex-column">
+                <ul class="list-group">
+                    <li class="list-group-item"><a href="informacionCuenta.php">Mi cuenta</a></li>
+                    <li class="list-group-item"><a href="misReservas.php">Mis Reservas</a></li>
+                    <li class="list-group-item"><a href="recomendaciones.php">Recomendaciones</a></li>
+                </ul>
+                <ul class="list-group mt-auto">
+                    <li class="list-group-item">
+                        <a href="logout.php" style="text-decoration: none; color: black">Cerrar sesión</a>
+                    </li>
+                </ul>
+            </div>
         </div>
 
         <!-- Logo + título centrado -->
@@ -234,8 +233,15 @@
         }
         ?>
     </header>
-
-    <div class="page-content">
+    <main>
+        <nav>
+            <ul class="navList">
+                <li><a  class="active" style='text-decoration: none; color:black;' href="busquedaVuelos.php">Vuelos</a></li>
+                <li><a style='text-decoration: none; color:black;' href="renting.php">Alquiler de coches</a></li>
+                <li><a style='text-decoration: none; color:black;' href="ferrys.php">Ferrys</a></li>
+            </ul>
+        </nav>
+        <div class="page-content">
         <div class="buscador-card">
             <h2>Encuentra tu vuelo</h2>
 
@@ -285,7 +291,7 @@
             <a href="index.php" class="volver-link">Volver a la página principal</a>
         </div>
     </div>
-
+    </main>
     <script>
         document.getElementById('formularioVuelos').addEventListener('submit', function () {
             const btn = document.getElementById('btnBuscar');

@@ -17,33 +17,32 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </head>
+<style>
+    .active {
+        color: blue !important; /* El color que deseas */
+        font-weight: bold;
+    }
+</style>
 <body>
     <header>   
         <img src="static/img/lista.png" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample" width="30" style="cursor: pointer;"> 
-        <div class="offcanvas-body d-flex flex-column">
-            <ul class="list-group">
-                <li class="list-group-item <?php echo ($pagina_actual == 'informacionCuenta.php') ? 'active' : ''; ?>">
-                    <a href="informacionCuenta.php" class="nav-link <?php echo ($pagina_actual == 'informacionCuenta.php') ? 'text-white' : 'text-dark'; ?>">
-                        Mi cuenta
-                    </a>
-                </li>
-                <li class="list-group-item <?php echo ($pagina_actual == 'misReservas.php') ? 'active' : ''; ?>">
-                    <a href="misReservas.php" class="nav-link <?php echo ($pagina_actual == 'misReservas.php') ? 'text-white' : 'text-dark'; ?>">
-                        Mis Reservas
-                    </a>
-                </li>
-                <li class="list-group-item <?php echo ($pagina_actual == 'recomendaciones.php') ? 'active' : ''; ?>">
-                    <a href="recomendaciones.php" class="nav-link <?php echo ($pagina_actual == 'recomendaciones.php') ? 'text-white' : 'text-dark'; ?>">
-                        Recomendaciones
-                    </a>
-                </li>
-
-            </ul>    
-            <ul class="list-group mt-auto">
-                <li class="list-group-item">
-                    <a href="logout.php" class="text-danger" style="text-decoration: none;">Cerrar sesión</a>
-                </li>
-            </ul>
+        <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+            <div class="offcanvas-header">
+                <h5 class="offcanvas-title" id="offcanvasExampleLabel">Menú Lateral</h5>
+                <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Cerrar"></button>
+            </div>
+            <div class="offcanvas-body d-flex flex-column">
+                <ul class="list-group">
+                    <li class="list-group-item"><a href="informacionCuenta.php">Mi cuenta</a></li>
+                    <li class="list-group-item"><a href="misReservas.php">Mis Reservas</a></li>
+                    <li class="list-group-item"><a href="recomendaciones.php">Recomendaciones</a></li>
+                </ul>
+                <ul class="list-group mt-auto">
+                    <li class="list-group-item">
+                        <a href="logout.php" style="text-decoration: none; color: black">Cerrar sesión</a>
+                    </li>
+                </ul>
+            </div>
         </div>
 
         <a href="index.php" id="menuPrincipial" style="text-decoration: none; color: inherit; display: flex; align-items: center;">
@@ -65,7 +64,7 @@
             <ul class="navList">
                 <li><a style='text-decoration: none; color:black;' href="busquedaVuelos.php">Vuelos</a></li>
                 <li><a style='text-decoration: none; color:black;' href="renting.php">Alquiler de coches</a></li>
-                <li><a style='text-decoration: none; color:black;' href="ferrys.php">Ferrys</a></li>
+                <li><a class="active" style='text-decoration: none; color:black;' href="ferrys.php">Ferrys</a></li>
             </ul>
         </nav>
         <br>
