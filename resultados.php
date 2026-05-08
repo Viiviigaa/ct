@@ -93,7 +93,7 @@ function link_p($n, $params) {
 
         <a href="index.php" id="menuPrincipial">
             <img src="static/img/logo.png" alt="logo" id="logo">
-            <h3 id="textoCabecera">Canary Travel</h3>
+            <h2 id="textoCabecera">Canary Travel</h2>
         </a>
         <div class="logs">
             <button class="btn btn-primary"><a href="empresas.php" style='text-decoration: none; color:white; width:150px'>Empresas</a></button>
