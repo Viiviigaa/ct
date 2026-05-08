@@ -1,5 +1,6 @@
 <?php
     $pagina_actual = basename($_SERVER['PHP_SELF']);
+    session_start();
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -215,14 +216,10 @@
                 </ul>
             </div>
         </div>
-
-        <!-- Logo + título centrado -->
         <a href="index.php" id="menuPrincipial">
             <img src="static/img/logo.png" alt="logo" id="logo" width="200px" height="auto">
             <h3 id="textoCabecera">Canary Travel</h3>
         </a>
-
-        <!-- Botones sesión (igual que index.php) -->
         <?php
         if (!isset($_SESSION['usuario'])) {
             echo "<div class='logs'>
