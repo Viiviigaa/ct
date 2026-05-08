@@ -213,7 +213,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         const fechaFin = document.getElementById("fechaFin");
                         const hoy = new Date().toISOString().split('T')[0];
                         fechaIni.setAttribute('min', hoy);
-                        fechaFin.setAttribute('min', fechaIni.value);
+                        fechaFin.setAttribute('min', hoy);
+                        fechaIni.addEventListener("change", () => {
+                            const seleccionada = fechaIni.value;                 
+                            fechaFin.setAttribute('min', seleccionada);
+                        })
                     </script>
                     <div class="col-md-2">
                         <label class="form-label fw-bold">Huéspedes</label>

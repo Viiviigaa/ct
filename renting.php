@@ -215,5 +215,9 @@
         const vuelta = document.getElementById("vuelta");
         const hoy = new Date().toISOString().split('T')[0];
         ida.setAttribute('min', hoy);
-        vuelta.setAttribute('min', ida.value);
+        vuelta.setAttribute('min',hoy);
+        vuelta.addEventListener("change", () => {
+            const seleccionada = ida.value;                 
+            fechaFin.setAttribute('min', seleccionada);
+        })
 </script>
