@@ -297,6 +297,38 @@ try {
     }
 </style>
 <body>
+    <header>
+        <img src="static/img/lista.png" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample" width="30">
+        <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+            <div class="offcanvas-header">
+                <h5 class="offcanvas-title" id="offcanvasExampleLabel">Menú Lateral</h5>
+                <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Cerrar"></button>
+            </div>
+            <div class="offcanvas-body d-flex flex-column">
+                <ul class="list-group">
+                    <li class="list-group-item"><a href="informacionCuenta.php">Mi cuenta</a></li>
+                    <li class="list-group-item"><a href="misReservas.php">Mis Reservas</a></li>
+                    <li class="list-group-item"><a href="recomendaciones.php">Recomendaciones</a></li>
+                </ul>
+                <ul class="list-group mt-auto">
+                    <li class="list-group-item"><a href="logout.php" style='text-decoration: none; color:black'>Cerrar sesion</a></li>
+                </ul>
+            </div>
+        </div>
+        <a href="" id="menuPrincipial">
+            <img src="static/img/logo.png" alt="logo" id="logo">
+            <h3 id="textoCabecera">Canary Travel</h3>
+        </a>
+        <?php
+        if (!isset($_SESSION['usuario'])) {
+            echo "<div class='logs'>
+                <a href='empresas.php' class='btn btn-primary'>Empresas</a>
+                <a href='sesion.php' class='btn btn-primary'>Iniciar sesión</a>
+                <a href='registro.php' class='btn btn-primary'>Registrarse</a>
+            </div>";
+        }
+        ?>
+    </header>
     <main class="container" style="margin-top: 100px !important;">
         <h3 class="display-3 fw-bold texto-azul mb-4" id="datosPersonales">
             Usuario:
@@ -313,9 +345,13 @@ try {
         <div class="row g-4">
             <div class="col-lg-4 col-md-5">
                 <div class="contenido border shadow-sm text-dark">
-                    <img src="static/img/usuario.png" alt="foto de perfil" class="img-fluid rounded mb-4 shadow-sm">
-                    <button class="btn btn-primary">Cambiar foto de perfil</button>
+                <img src="<?php echo !empty($informacionUsuario['foto_perfil']) ? $informacionUsuario['foto_perfil'] : 'static/img/usuario.png'; ?>" 
+                    alt="foto de perfil" class="img-fluid rounded mb-4 shadow-sm">
+                
+                <div class="d-grid gap-2">
+                    <button id="upload_widget" class="btn btn-primary">Subir nueva foto</button>
                 </div>
+        </div>
             </div>
 
             <div class="col-lg-8 col-md-7">
@@ -483,6 +519,24 @@ try {
         document.getElementById('modalSuscripcion').addEventListener('click', function(e) {
             if (e.target === this) closeModal();
         });
+    </script><!-- Script de Cloudinary -->
+    <script src="https://upload-widget.cloudinary.com/global/all.js" type="text/javascript"></script>
+    <script>
+        var myWidget = cloudinary.createUploadWidget({
+            cloudName: 'dkbepwbpj', 
+            uploadPreset: 'canary'
+        }, (error, result) => { 
+            if (!error && result && result.event === "success") { 
+                console.log('Imagen subida con éxito: ', result.info.secure_url);
+                // Enviamos la URL al servidor mediante una redirección o un formulario oculto
+                window.location.href = `actualizar_foto.php?url=${encodeURIComponent(result.info.secure_url)}`;
+            }
+        });
+
+        document.getElementById("upload_widget").addEventListener("click", function(e){
+            e.preventDefault();
+            myWidget.open();
+        }, false);
     </script>
 </body>
 </html>
