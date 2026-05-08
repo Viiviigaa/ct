@@ -211,13 +211,14 @@
 </body>
 </html>
 <script>
-        const ida = document.getElementById("ida");
-        const vuelta = document.getElementById("vuelta");
-        const hoy = new Date().toISOString().split('T')[0];
-        ida.setAttribute('min', hoy);
-        vuelta.setAttribute('min',hoy);
-        vuelta.addEventListener("change", () => {
-            const seleccionada = ida.value;                 
-            fechaFin.setAttribute('min', seleccionada);
-        })
+    const ida = document.getElementById("ida");
+    const vuelta = document.getElementById("vuelta");
+    const hoy = new Date().toISOString().split('T')[0];
+    ida.setAttribute('min', hoy);
+    vuelta.setAttribute('min', hoy);
+
+    ida.addEventListener("change", () => {
+        const fechaSeleccionada = ida.value;
+        vuelta.setAttribute('min', fechaSeleccionada);
+    });
 </script>
