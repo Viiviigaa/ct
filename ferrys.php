@@ -110,11 +110,11 @@
                     </div>
                     <div class="col-md-2">
                         <label class="form-label fw-bold">Fecha de salida</label>
-                        <input type="date" name="fechaSalida" class="form-control" value="<?php echo $_POST['fechaSalida'] ?? ''; ?>">
+                        <input type="date" name="fechaSalida" id="ida" class="form-control" value="<?php echo $_POST['fechaSalida'] ?? ''; ?>">
                     </div>
                     <div class="col-md-2">
                         <label class="form-label fw-bold">Pasajeros</label>
-                        <input type="number" name="pasajeros" class="form-control" value="<?php echo $_POST['pasajeros'] ?? ''; ?>">
+                        <input type="number" name="pasajeros" id="vuelta"  class="form-control" value="<?php echo $_POST['pasajeros'] ?? ''; ?>">
                     </div>
                     <div class="col-md-1">
                         <label class="form-label fw-bold">Vehículo: </label>
@@ -202,4 +202,15 @@
         ?>
     </main>
 </body>
+<script>
+    const ida = document.getElementById("ida");
+    const vuelta = document.getElementById("vuelta");
+    const hoy = new Date().toISOString().split('T')[0];
+    ida.setAttribute('min', hoy);
+    vuelta.setAttribute('min', hoy);
+    ida.addEventListener("change", () => {
+        const fechaSeleccionada = ida.value;
+        vuelta.setAttribute('min', fechaSeleccionada);
+    });
+</script>
 </html>
