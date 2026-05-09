@@ -9,15 +9,17 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
 </head>
+<style>
+    form { max-width: 500px; margin: 40px auto; padding: 30px; background-color: #ffffff; border-radius: 15px; box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1); font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+    form label { font-weight: 600; color: #333; margin-bottom: 8px; display: inline-block; }
+    form input[type="text"], form input[type="password"] { width: 100%; padding: 12px 15px; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box; margin-bottom: 15px; }
+    form input[type="submit"]{ width: 100%; padding: 12px 15px; border-radius: 8px; }
+</style>
 <?php
-
 include 'conectar.php';
-
 session_start();
-
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
-
     $errores = [];
     $correcta = false;
 
@@ -107,14 +109,11 @@ ini_set('display_errors', 1);
             } 
             ?>
             <br>
-            <input type="submit" name="envio" value="Enviar" id='enviar'>
+            <input type="submit" name="envio" value="Iniciar sesión" id='enviar'>
         </form>
         <br>
     </div>
-
     <footer>
-
-    </footer>
-    
+    </footer>  
 </body>
 </html>
