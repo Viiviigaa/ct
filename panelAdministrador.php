@@ -1,161 +1,182 @@
 <?php
-    include 'conectar.php';
-    session_start();
-    if($_SESSION['rol']!= 'administrador'){
-        header('Location: index.php');
-    }
+session_start();
+if (!isset($_SESSION['rol']) || $_SESSION['rol'] !== 'administrador') {
+    header("Location: index.php");
+    exit();
+}
 ?>
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gestión Integral - Admin</title>
+    <title>Panel Admin - Canary Travel</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
     <style>
+        /* Estilos para tu cabecera personalizada */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            background-color: #ffffff;
+            border-bottom: 1px solid #ddd;
+            sticky: top;
+            z-index: 1000;
+        }
+        #menuPrincipial {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            color: black;
+        }
+        #logo { width: 50px; margin-right: 10px; }
+        .logs .btn { margin-left: 5px; }
+
+        /* Ajustes para el Menú Lateral (Claro) */
+        .offcanvas { background-color: #f8f9fa; border-right: 1px solid #dee2e6; }
+        .list-group-item { background-color: transparent; border: none; }
+        .list-group-item a { text-decoration: none; color: #333; font-weight: 500; }
+        .list-group-item a:hover { color: #0d6efd; }
+
+        /* Cuerpo del Panel */
         body { background-color: #f4f7f6; }
-        .sidebar { height: 100vh; position: fixed; top: 0; left: 0; padding: 20px; background: #2c3e50; color: white; z-index: 100; }
-        .main-content { margin-left: 16.6%; padding: 40px; }
-        .admin-card { background: white; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); margin-bottom: 50px; border: none; }
-        .card-header-admin { background: white; border-bottom: 2px solid #f4f7f6; padding: 20px; border-radius: 10px 10px 0 0; }
-        .btn-action { padding: 5px 15px; border-radius: 20px; }
-        .sticky-section-title { position: sticky; top: 0; background: #f4f7f6; z-index: 10; padding: 10px 0; }
+        .admin-section { 
+            background: white; 
+            border-radius: 12px; 
+            padding: 25px; 
+            margin-bottom: 40px; 
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            border: 1px solid #e9ecef;
+        }
+        .section-title { border-left: 5px solid #0d6efd; padding-left: 15px; margin-bottom: 25px; }
     </style>
 </head>
 <body>
 
-<div class="container-fluid">
-    <div class="row">
-        <!-- Sidebar Fijo -->
-        <nav class="col-md-2 d-none d-md-block sidebar">
-            <h3 class="mb-4 text-center text-info">Admin v1.0</h3>
-            <ul class="nav flex-column">
-                <li class="nav-item mb-2">
-                    <a class="nav-link text-white" href="#sec-recomendaciones"><i class="bi bi-chat-left-quote me-2"></i> Moderación</a>
-                </li>
-                <li class="nav-item mb-2">
-                    <a class="nav-link text-white" href="#sec-usuarios"><i class="bi bi-people me-2"></i> Usuarios</a>
-                </li>
-                <li class="nav-item mb-2">
-                    <a class="nav-link text-white" href="#sec-reservas"><i class="bi bi-calendar-check me-2"></i> Reservas</a>
-                </li>
-                <li class="nav-item mb-2">
-                    <a class="nav-link text-white" href="#sec-alojamientos"><i class="bi bi-house-door me-2"></i> Alojamientos</a>
-                </li>
-                <li class="nav-item mt-5">
-                    <a class="nav-link text-danger" href="logout.php"><i class="bi bi-box-arrow-right me-2"></i> Cerrar Sesión</a>
-                </li>
-            </ul>
-        </nav>
+    <!-- TU CABECERA PERSONALIZADA -->
+    <header>   
+        <img src="static/img/lista.png" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample" width="30" style="cursor:pointer"> 
+        
+        <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">  
+            <div class="offcanvas-header">    
+                <h5 class="offcanvas-title" id="offcanvasExampleLabel">Gestión Admin</h5>    
+                <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Cerrar"></button>  
+            </div>  
+            <div class="offcanvas-body d-flex flex-column">    
+                <ul class="list-group">    
+                    <li class="list-group-item"><strong>NAVEGACIÓN PANEL</strong></li>
+                    <li class="list-group-item"><a href="#sec-recomendaciones">Aceptar/Denegar Recomendaciones</a></li>
+                    <li class="list-group-item"><a href="#sec-usuarios">Gestión de Usuarios</a></li>
+                    <li class="list-group-item"><a href="#sec-reservas">Control de Reservas</a></li>
+                    <li class="list-group-item"><a href="#sec-alojamientos">Alojamientos</a></li>
+                    <hr>
+                    <li class="list-group-item"><a href="informacionCuenta.php">Mi cuenta</a></li> 
+                    <li class="list-group-item"><a href="misReservas.php">Mis reservas</a></li>    
+                    <li class="list-group-item"><a href="recomendaciones.php">Recomendaciones Públicas</a></li>  
+                </ul> 
+                <ul class="list-group mt-auto">
+                    <li class="list-group-item"><a href="logout.php" style='text-decoration: none; color:black'>Cerrar sesión</a></li>
+                </ul> 
+            </div> 
+        </div>
 
-        <!-- Contenido Desplazable -->
-        <main class="col-md-10 main-content">
-            
-            <h1 class="mb-5">Panel de Control General</h1>
+        <a href="index.php" id="menuPrincipial">
+            <img src="static/img/logo.png" alt="logo" id="logo">
+            <h3 id="textoCabecera" class="mb-0">Canary Travel</h3>
+        </a>
 
-            <!-- 1. SECCIÓN RECOMENDACIONES -->
-            <div id="sec-recomendaciones" class="admin-card card">
-                <div class="card-header-admin d-flex justify-content-between align-items-center">
-                    <h4 class="mb-0 text-primary">Recomendaciones Pendientes</h4>
-                    <span class="badge bg-warning text-dark">Moderación requerida</span>
-                </div>
-                <div class="card-body">
-                    <table class="table align-middle">
-                        <thead>
-                            <tr>
-                                <th>Usuario</th>
-                                <th>Alojamiento</th>
-                                <th>Comentario</th>
-                                <th>Acción</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <!-- Ejemplo de datos -->
-                            <tr>
-                                <td><strong>@user99</strong></td>
-                                <td>Villa Sol</td>
-                                <td>"Increíble vista, volveré pronto."</td>
-                                <td>
-                                    <a href="moderar.php?id=1&estado=ok" class="btn btn-success btn-action btn-sm">Aceptar</a>
-                                    <a href="moderar.php?id=1&estado=no" class="btn btn-outline-danger btn-action btn-sm">Denegar</a>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
+        <div class="logs">
+            <button class="btn btn-primary"><a href="empresas.php" style='text-decoration: none; color:white;'>Empresas</a></button>
+            <button class="btn btn-primary"><a href="sesion.php" style='text-decoration: none; color:white;'>Iniciar sesión</a></button>
+            <button class="btn btn-primary"><a href="registro.php" style='text-decoration: none; color:white;'>Registrarse</a></button>
+        </div>
+    </header>
+
+    <div class="container mt-5">
+        
+        <!-- 1. MODERACIÓN DE RECOMENDACIONES -->
+        <div id="sec-recomendaciones" class="admin-section">
+            <h3 class="section-title">Moderación de Recomendaciones</h3>
+            <table class="table align-middle">
+                <thead class="table-light">
+                    <tr>
+                        <th>Usuario</th>
+                        <th>Comentario</th>
+                        <th>Fecha</th>
+                        <th>Acción</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Carlos Santana</td>
+                        <td>"El apartamento en Corralejo fue fantástico."</td>
+                        <td>2024-03-14</td>
+                        <td>
+                            <button class="btn btn-success btn-sm">Publicar</button>
+                            <button class="btn btn-danger btn-sm">Descartar</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- 2. USUARIOS -->
+        <div id="sec-usuarios" class="admin-section">
+            <h3 class="section-title">Gestión de Usuarios</h3>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>DNI</th>
+                        <th>Nombre</th>
+                        <th>Rol</th>
+                        <th>Estado</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Aquí el foreach de PHP -->
+                </tbody>
+            </table>
+        </div>
+
+        <!-- 3. RESERVAS -->
+        <div id="sec-reservas" class="admin-section">
+            <h3 class="section-title">Reservas del Sistema</h3>
+            <div class="alert alert-info">Total de reservas activas hoy: 12</div>
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Ref</th>
+                        <th>Cliente</th>
+                        <th>Alojamiento</th>
+                        <th>Check-in</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Datos -->
+                </tbody>
+            </table>
+        </div>
+
+        <!-- 4. ALOJAMIENTOS -->
+        <div id="sec-alojamientos" class="admin-section">
+            <div class="d-flex justify-content-between">
+                <h3 class="section-title">Alojamientos</h3>
+                <button class="btn btn-outline-primary btn-sm">+ Añadir Casa</button>
             </div>
-
-            <!-- 2. SECCIÓN USUARIOS -->
-            <div id="sec-usuarios" class="admin-card card">
-                <div class="card-header-admin">
-                    <h4 class="mb-0 text-success">Gestión de Usuarios</h4>
-                </div>
-                <div class="card-body text-center py-4">
-                    <p class="text-muted">Aquí puedes ver y editar los roles de los usuarios registrados.</p>
-                    <table class="table table-hover">
-                        <thead class="table-light">
-                            <tr>
-                                <th>DNI</th>
-                                <th>Nombre</th>
-                                <th>Rol Actual</th>
-                                <th>Cambiar Rol</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <!-- PHP Foreach aquí -->
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-
-            <!-- 3. SECCIÓN RESERVAS -->
-            <div id="sec-reservas" class="admin-card card">
-                <div class="card-header-admin">
-                    <h4 class="mb-0 text-info">Reservas Activas</h4>
-                </div>
-                <div class="card-body">
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Cliente</th>
-                                <th>Fecha Entrada</th>
-                                <th>Estado</th>
-                                <th>Acción</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <!-- PHP Foreach aquí -->
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-
-            <!-- 4. SECCIÓN ALOJAMIENTOS -->
-            <div id="sec-alojamientos" class="admin-card card border-primary">
-                <div class="card-header-admin d-flex justify-content-between">
-                    <h4 class="mb-0 text-secondary">Catálogo de Alojamientos</h4>
-                    <button class="btn btn-primary btn-sm">+ Añadir Nuevo</button>
-                </div>
-                <div class="card-body">
-                    <!-- Lista de alojamientos -->
-                    <div class="row">
-                        <!-- Ejemplo de item -->
-                        <div class="col-md-4 mb-3">
-                            <div class="p-3 border rounded">
-                                <h6>Apartamento Centro</h6>
-                                <p class="small text-muted">Precio: 85€/noche</p>
-                                <button class="btn btn-link btn-sm p-0">Editar datos</button>
-                            </div>
-                        </div>
+            <div class="row mt-3">
+                <div class="col-md-4">
+                    <div class="card p-3 shadow-sm border-0">
+                        <strong>Villa Oasis</strong>
+                        <p class="mb-0 text-muted small">Maspalomas, Gran Canaria</p>
                     </div>
                 </div>
             </div>
+        </div>
 
-        </main>
     </div>
-</div>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
