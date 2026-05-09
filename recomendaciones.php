@@ -171,8 +171,8 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
             <?php
                 $isla = $_POST['isla'] ?? ''; 
                 $tipoAc = $_POST['tipoAc'] ?? '';
+                $recomendaciones = mostrarRecomendaciones($isla, $tipoAc);
                 if(!empty($recomendaciones)){
-                    $recomendaciones = mostrarRecomendaciones($isla, $tipoAc);
                     foreach($recomendaciones as $r){
                         echo "
                             <div class='col-md-4'>
