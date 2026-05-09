@@ -169,7 +169,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
         </div>
         <div class="row g-5">
             <?php
-                mostrarAlojamientos(null, null);
+                mostrarTodasRecomendaciones();
                 if($_SERVER['REQUEST_METHOD'] == 'POST'){
                     $isla = $_POST['isla'] ?? ''; 
                     $tipoAc = $_POST['tipoAc'] ?? '';
@@ -283,7 +283,6 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
             btnWidget.classList.replace('btn-outline-primary', 'btn-outline-secondary');
         }
     });
-
     document.getElementById("upload_widget").addEventListener("click", function(e){
         e.preventDefault();
         myWidget.open();
