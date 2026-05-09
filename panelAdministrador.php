@@ -31,7 +31,7 @@ function listadoReservasVigentes()
     $conn = conectarBD();
     $hoy = new DateTime();
     $hoy =  $hoy->format('Y-m-d');
-    $query = "SELECT * FROM reservas where fechaInicio<= ? and fechaFin >=?";
+    $query = "SELECT * FROM reservas where fechaInicio <= ? and fechaFinal >= ?";
     $stmt = $conn->prepare($query);
     $stmt->execute([$hoy, $hoy]);
     $resultado = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -316,7 +316,7 @@ function listadoAlojamientosPorAprobar()
     </div>
     <div class="container mt-5">
         <div id="sec-recomendaciones" class="admin-section">
-            <h3 class="section-title">Reservas vigentes</h3>
+            <h3 class="section-title">Listado de alojamientos</h3>
             <table class="table align-middle">
                 <thead class="table-light">
                     <tr>
@@ -335,7 +335,7 @@ function listadoAlojamientosPorAprobar()
                         echo "
                         <tr>
                             <td>{$r['id']}</td>
-                            <td>{$r['nombidAlojamiento']}</td>
+                            <td>{$r['idAlojamiento']}</td>
                             <td>{$r['fechaInicio']}</td>
                             <td>{$r['fechaFinal']}</td>
                             <td>{$r['cantidadHuespedes']}</td>
@@ -381,23 +381,59 @@ function listadoAlojamientosPorAprobar()
         </div>
     </div>
 
-    <!-- 4. ALOJAMIENTOS -->
-    <div id="sec-alojamientos" class="admin-section">
-        <div class="d-flex justify-content-between">
-            <h3 class="section-title">Alojamientos</h3>
-            <button class="btn btn-outline-primary btn-sm">+ Añadir Casa</button>
-        </div>
-        <div class="row mt-3">
-            <div class="col-md-4">
-                <div class="card p-3 shadow-sm border-0">
-                    <strong>Villa Oasis</strong>
-                    <p class="mb-0 text-muted small">Maspalomas, Gran Canaria</p>
-                </div>
+    <div class="container mt-5">
+        <div id="sec-alojamientos" class="admin-section">
+            <div class="d-flex justify-content-between">
+                <h3 class="section-title">Moderación de alojamientos</h3>
+                <button class="btn btn-outline-primary btn-sm">+ Añadir Casa</button>
             </div>
+            <table class="table align-middle">
+                <thead class="table-light">
+                    <tr>
+                        <th>ID</th>
+                        <th>Nombre del alojamiento</th>
+                        <th>Isla</th>
+                        <th>Descripción</th>
+                        <th>Fotos</th>
+                        <th>Precio</th>
+                        <th>Dirección</th>
+                        <th>Cantidad máxima de huéspedes</th>
+                        <th>Código de empresa</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
+                    $alojamientos = listadoAlojamientosPorAprobar();
+                    foreach ($alojamientos as $a) {
+                        echo "
+                        <tr>
+                            <td>{$a['ID']}</td>
+                            <td>{$a['nombreAlojamiento']}</td>
+                            <td>{$a['Isla']}</td>
+                            <td>{$a['descripcion']}</td>
+                            <td>{$a['fotos']}</td>
+                            <td>{$a['precio']}</td>
+                            <td>{$a['direccion']}</td>
+                            <td>{$a['max_huespedes']}</td>
+                            <td>{$a['codigoEmpresa']}</td>
+                            <td>
+                                <form method='get' action=''>
+                                    <input type='hidden' name='alojamientoPendiente' value='Aprobada'>
+                                    <button class='btn btn-success btn-sm'>Publicar</button>
+                                </form>
+                            </td>
+                            <td>
+                                <form method='get' action=''>
+                                    <input type='hidden' name='alojamientoPendiente' value='Rechazada'>
+                                    <button class='btn btn-success btn-sm'>Publicar</button>
+                                </form>
+                            </td>
+                        </tr>";
+                    }
+                    ?>
+                </tbody>
+            </table>
         </div>
-    </div>
-
     </div>
 </body>
-
 </html>
