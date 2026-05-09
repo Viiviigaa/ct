@@ -317,7 +317,7 @@ try {
                 </ul>
             </div>
         </div>
-        <a href="" id="menuPrincipial">
+        <a href="index.php" id="menuPrincipial">
             <img src="static/img/logo.png" alt="logo" id="logo">
             <h3 id="textoCabecera">Canary Travel</h3>
         </a>

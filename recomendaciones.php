@@ -270,12 +270,10 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
         if (!error && result && result.event === "success") { 
             console.log('Imagen subida con éxito: ', result.info.secure_url);
             
-            // 1. Buscamos el input oculto por su ID
             const inputImagen = document.getElementById('input_url_imagen');
             const preview = document.getElementById('preview_container');
             const btnWidget = document.getElementById('upload_widget');
 
-            // 2. Le asignamos la URL de Cloudinary
             inputImagen.value = result.info.secure_url;
 
             // 3. Feedback visual
