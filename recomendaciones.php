@@ -139,7 +139,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
                 <div class="row align-items-end justify-content-center">
                     <div class="col-md-2">
                         <label class="form-label fw-bold">Isla</label>
-                        <select name="isla" class="form-select">
+                        <select name="isla" class="form-select" value="<?php if(isset($_POST['isla'])) echo $_POST['isla']?>">
                             <?php
                             try {
                                 $conn = conectarBD();
