@@ -308,6 +308,10 @@
         const hoy = new Date().toISOString().split('T')[0];
         ida.setAttribute('min', hoy);
         vuelta.setAttribute('min', hoy);
+        ida.addEventListener("change", () => {
+            const fechaSeleccionada = ida.value;
+            vuelta.setAttribute('min', fechaSeleccionada);
+        });
     </script>
     <style>
         @keyframes spin { to { transform: rotate(360deg); } }
