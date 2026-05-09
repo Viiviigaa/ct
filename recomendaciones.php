@@ -235,9 +235,20 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
                                 <label class='form-label'>Descripción</label>
                                 <textarea name='descripcion' class='form-control' rows='3' required></textarea>
                             </div>
-                             <div class='mb-3'>
-                                <label class='form-label'>Imagen</label>
-                                <input type='text' name='imagen' class='form-control' placeholder='URL Imagen' required>
+                            <div class='mb-3'>
+                                <label class='form-label d-block'>Imagen de la Recomendación</label>
+                                <!-- El widget escribirá la URL aquí -->
+                                <input type='hidden' name='imagen' id='input_url_imagen' required>
+                                
+                                <!-- Botón para abrir Cloudinary -->
+                                <button type='button' id='upload_widget' class='btn btn-outline-primary w-100'>
+                                    <i class='bi bi-camera'></i> Seleccionar Imagen
+                                </button>
+                                
+                                <!-- Feedback visual para el usuario -->
+                                <div id='preview_container' class='mt-2' style='display:none;'>
+                                    <span class='badge bg-success'>Imagen cargada correctamente</span>
+                                </div>
                             </div>
                             <div class='modal-footer px-0 pb-0'>
                                 <button type='button' class='btn btn-secondary' data-bs-dismiss='modal'>Cancelar</button>
@@ -250,4 +261,33 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
         </div>";
     ?>
 </body>
+<script src="https://upload-widget.cloudinary.com/global/all.js" type="text/javascript"></script>
+<script>
+    var myWidget = cloudinary.createUploadWidget({
+        cloudName: 'dkbepwbpj', 
+        uploadPreset: 'canary'
+    }, (error, result) => { 
+        if (!error && result && result.event === "success") { 
+            console.log('Imagen subida con éxito: ', result.info.secure_url);
+            
+            // 1. Buscamos el input oculto por su ID
+            const inputImagen = document.getElementById('input_url_imagen');
+            const preview = document.getElementById('preview_container');
+            const btnWidget = document.getElementById('upload_widget');
+
+            // 2. Le asignamos la URL de Cloudinary
+            inputImagen.value = result.info.secure_url;
+
+            // 3. Feedback visual
+            preview.style.display = 'block';
+            btnWidget.innerText = 'Cambiar Imagen';
+            btnWidget.classList.replace('btn-outline-primary', 'btn-outline-secondary');
+        }
+    });
+
+    document.getElementById("upload_widget").addEventListener("click", function(e){
+        e.preventDefault();
+        myWidget.open();
+    }, false);
+</script>
 </html>

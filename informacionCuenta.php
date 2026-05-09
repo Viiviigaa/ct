@@ -530,7 +530,7 @@ try {
             if (!error && result && result.event === "success") { 
                 console.log('Imagen subida con éxito: ', result.info.secure_url);
                 // Enviamos la URL al servidor mediante una redirección o un formulario oculto
-                window.location.href = `actualizar_foto.php?url=${encodeURIComponent(result.info.secure_url)}`;
+                window.location.href = `actualizar_foto_perfil.php?url=${encodeURIComponent(result.info.secure_url)}`;
             }
         });
 
