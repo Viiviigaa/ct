@@ -1,4 +1,5 @@
 <?php
+include 'conectar.php';
 session_start();
 if (!isset($_SESSION['rol']) || $_SESSION['rol'] !== 'administrador') {
     header("Location: index.php");
@@ -150,6 +151,53 @@ function listadoAlojamientosPorAprobar(){
                 <tbody>
                     <?php
                     $recommend = recomendacionesPorAprobar();
+                    foreach($recommend as $r){
+                        echo "
+                        <tr>
+                            <td>{$r['titulo']}</td>
+                            <td>{$r['descripcion']}</td>
+                            <td>{$r['imagen']}</td>
+                            <td>{$r['precio']}</td>
+                            <td>{$r['lugar']}</td>
+                            <td>{$r['tipoActividad']}</td>
+                            <td>
+                                <form method='post' action='procesarRecomendacion.php'>
+                                    <input type='hidden' value='Aprobada'>
+                                    <button class='btn btn-success btn-sm'>Publicar</button>
+                                </form>
+                            </td>
+                            <td>
+                                <form method='post' action='procesarRecomendacion.php'>
+                                    <input type='hidden' value='Rechazada'>
+                                    <button class='btn btn-success btn-sm'>Publicar</button>
+                                </form>
+                            </td>
+                        </tr>";
+                    }
+                    ?>
+                </tbody>
+            </table>
+        </div>
+        <div class="container mt-5">
+        <div id="sec-recomendaciones" class="admin-section">
+            <h3 class="section-title">Moderación de alojamientos</h3>
+            <table class="table align-middle">
+                <thead class="table-light">
+                    <tr>
+                        <th>ID</th>
+                        <th>Nombre del alojamiento</th>
+                        <th>Isla</th>
+                        <th>Descripción</th>
+                        <th>Fotos</th>
+                        <th>Precio</th>
+                        <th>Dirección</th>
+                        <th>Cantidad máxima de huéspedes</th>
+                        <th>Código de empresa</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
+                    $alojamientos = listadoAlojamientosPorAprobar();
                     foreach($recommend as $r){
                         echo "
                         <tr>
