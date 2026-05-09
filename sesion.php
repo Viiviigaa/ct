@@ -51,9 +51,11 @@ ini_set('display_errors', 1);
                     $_SESSION['usuario'] = $nombre;
                     if($_SESSION['rol'] == 'administrador'){
                         header('Location: panelAdministador.php');
+                        exit();
+                    }else{
+                        header("Location: index.php");
+                        exit();
                     }
-                    header("Location: index.php");
-                    exit();
                 }else{
                     $errores['contrasenaInvalida'] = "La contraseña no es correcta";
                 }
