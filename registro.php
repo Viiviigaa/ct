@@ -204,8 +204,7 @@ ini_set('display_errors', 1);
                 <input type="date" name="fechaNac" id="fechaNac" class="inputIni" value="<?= htmlspecialchars($_POST['fechaNac'] ?? '') ?>">
                 <?= $errores['fechaNac'] ?? '' ?>
             </div>
-
-            <input type="submit" value="Registrarse" id="submitRegister" class=".btn-primary">    
+            <input type="submit" value="Registrarse" class="btn btn-primary">    
         </form>    
     </div>
 </main>
