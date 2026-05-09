@@ -50,7 +50,7 @@ ini_set('display_errors', 1);
                 if($correcta){
                     $_SESSION['usuario'] = $nombre;
                     if($_SESSION['rol'] == 'administrador'){
-                        header('Location: panelAdministador.php');
+                        header('Location: panelAdministrador.php');
                         exit();
                     }else{
                         header("Location: index.php");
