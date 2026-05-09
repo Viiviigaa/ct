@@ -6,7 +6,8 @@ if (!isset($_SESSION['rol']) || $_SESSION['rol'] !== 'administrador') {
     exit();
 }
 
-function recomendacionesPorAprobar(){
+function recomendacionesPorAprobar()
+{
     $conn = conectarBD();
     $query = "SELECT  * from recomendacionesPendientes";
     $stmt = $conn->prepare($query);
@@ -15,7 +16,8 @@ function recomendacionesPorAprobar(){
     return $resultado;
 }
 
-function listadoUsuarios(){
+function listadoUsuarios()
+{
     $conn = conectarBD();
     $query = "SELECT * FROM usuarios";
     $stmt = $conn->prepare($query);
@@ -24,38 +26,42 @@ function listadoUsuarios(){
     return $resultado;
 }
 
-function listadoReservasVigentes(){
+function listadoReservasVigentes()
+{
     $conn = conectarBD();
-    $hoy = new DateTime(); 
+    $hoy = new DateTime();
     $hoy =  $hoy->format('Y-m-d');
-    $query = "SELECT * FROM reservas where fechaInicio>= ? and fechaFin <=?";
+    $query = "SELECT * FROM reservas where fechaInicio<= ? and fechaFin >=?";
     $stmt = $conn->prepare($query);
     $stmt->execute([$hoy, $hoy]);
     $resultado = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    return $resultado; 
+    return $resultado;
 }
 
-function listadoAlojamientos(){
+function listadoAlojamientos()
+{
     $conn = conectarBD();
     $query = "SELECT * FROM alojamientos";
     $stmt = $conn->prepare($query);
     $stmt->execute();
     $resultado = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    return $resultado; 
+    return $resultado;
 }
 
-function listadoAlojamientosPorAprobar(){
+function listadoAlojamientosPorAprobar()
+{
     $conn = conectarBD();
     $query = "SELECT * FROM alojamientosPendientes";
     $stmt = $conn->prepare($query);
     $stmt->execute();
     $resultado = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    return $resultado; 
+    return $resultado;
 }
 ?>
 
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -70,40 +76,69 @@ function listadoAlojamientosPorAprobar(){
             text-decoration: none;
             color: black;
         }
-        #logo { width: 50px; margin-right: 10px; }
-        .logs .btn { margin-left: 5px; }
+
+        #logo {
+            width: 50px;
+            margin-right: 10px;
+        }
+
+        .logs .btn {
+            margin-left: 5px;
+        }
 
         /* Ajustes para el Menú Lateral (Claro) */
-        .offcanvas { background-color: #f8f9fa; border-right: 1px solid #dee2e6; }
-        .list-group-item { background-color: transparent; border: none; }
-        .list-group-item a { text-decoration: none; color: #333; font-weight: 500; }
-        .list-group-item a:hover { color: #0d6efd; }
+        .offcanvas {
+            background-color: #f8f9fa;
+            border-right: 1px solid #dee2e6;
+        }
+
+        .list-group-item {
+            background-color: transparent;
+            border: none;
+        }
+
+        .list-group-item a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+        }
+
+        .list-group-item a:hover {
+            color: #0d6efd;
+        }
 
         /* Cuerpo del Panel */
-        body { background-color: #f4f7f6; }
-        .admin-section { 
-            background: white; 
-            border-radius: 12px; 
-            padding: 25px; 
-            margin-bottom: 40px; 
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        body {
+            background-color: #f4f7f6;
+        }
+
+        .admin-section {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 40px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
             border: 1px solid #e9ecef;
         }
-        .section-title { border-left: 5px solid #0d6efd; padding-left: 15px; margin-bottom: 25px; }
+
+        .section-title {
+            border-left: 5px solid #0d6efd;
+            padding-left: 15px;
+            margin-bottom: 25px;
+        }
     </style>
 </head>
-<body>
 
-    <!-- TU CABECERA PERSONALIZADA -->
-    <header>   
-        <img src="static/img/lista.png" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample" width="30" style="cursor:pointer"> 
-        <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">  
-            <div class="offcanvas-header">    
-                <h5 class="offcanvas-title" id="offcanvasExampleLabel">Gestión Administrador</h5>    
-                <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Cerrar"></button>  
-            </div>  
-            <div class="offcanvas-body d-flex flex-column">    
-                <ul class="list-group">    
+<body>
+    <header>
+        <img src="static/img/lista.png" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample" width="30" style="cursor:pointer">
+        <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+            <div class="offcanvas-header">
+                <h5 class="offcanvas-title" id="offcanvasExampleLabel">Gestión Administrador</h5>
+                <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Cerrar"></button>
+            </div>
+            <div class="offcanvas-body d-flex flex-column">
+                <ul class="list-group">
                     <li class="list-group-item"><strong>NAVEGACIÓN PANEL</strong></li>
                     <li class="list-group-item"><a href="#sec-recomendaciones">Aceptar/Denegar Recomendaciones</a></li>
                     <li class="list-group-item"><a href="#sec-usuarios">Gestión de Usuarios</a></li>
@@ -111,16 +146,16 @@ function listadoAlojamientosPorAprobar(){
                     <li class="list-group-item"><a href="#sec-alojamientos">Alojamientos</a></li>
                     <hr>
                     <li class="list-group-item"><strong>NAVEGACIÓN DE LA APLICACIÓN</strong></li>
-                    <li class="list-group-item"><a href="index.php">Alojamientos</a></li>    
-                    <li class="list-group-item"><a href="recomendaciones.php">Recomendaciones Públicas</a></li> 
+                    <li class="list-group-item"><a href="index.php">Alojamientos</a></li>
+                    <li class="list-group-item"><a href="recomendaciones.php">Recomendaciones Públicas</a></li>
                     <li class="list-group-item"><a href="busquedaVuelos.php">Vuelos</a></li>
                     <li class="list-group-item"><a href="renting.php">Alquiler de coches</a></li>
                     <li class="list-group-item"><a href="ferrys.php">Ferrys</a></li>
-                </ul> 
+                </ul>
                 <ul class="list-group mt-auto">
                     <li class="list-group-item"><a href="logout.php" style='text-decoration: none; color:black'>Cerrar sesión</a></li>
-                </ul> 
-            </div> 
+                </ul>
+            </div>
         </div>
 
         <a href="index.php" id="menuPrincipial">
@@ -151,7 +186,7 @@ function listadoAlojamientosPorAprobar(){
                 <tbody>
                     <?php
                     $recommend = recomendacionesPorAprobar();
-                    foreach($recommend as $r){
+                    foreach ($recommend as $r) {
                         echo "
                         <tr>
                             <td>{$r['titulo']}</td>
@@ -161,14 +196,14 @@ function listadoAlojamientosPorAprobar(){
                             <td>{$r['lugar']}</td>
                             <td>{$r['tipoActividad']}</td>
                             <td>
-                                <form method='post' action='procesarRecomendacion.php'>
-                                    <input type='hidden' value='Aprobada'>
+                                <form method='post' action=''>
+                                    <input type='hidden' name='recomendacionPendiente' value='Aprobada'>
                                     <button class='btn btn-success btn-sm'>Publicar</button>
                                 </form>
                             </td>
                             <td>
-                                <form method='post' action='procesarRecomendacion.php'>
-                                    <input type='hidden' value='Rechazada'>
+                                <form method='post' action=''>
+                                    <input type='hidden' name='recomendacionPendiente' value='Rechazada'>
                                     <button class='btn btn-success btn-sm'>Publicar</button>
                                 </form>
                             </td>
@@ -178,7 +213,8 @@ function listadoAlojamientosPorAprobar(){
                 </tbody>
             </table>
         </div>
-        <div class="container mt-5">
+    </div>
+    <div class="container mt-5">
         <div id="sec-recomendaciones" class="admin-section">
             <h3 class="section-title">Moderación de alojamientos</h3>
             <table class="table align-middle">
@@ -198,24 +234,27 @@ function listadoAlojamientosPorAprobar(){
                 <tbody>
                     <?php
                     $alojamientos = listadoAlojamientosPorAprobar();
-                    foreach($recommend as $r){
+                    foreach ($alojamientos as $a) {
                         echo "
                         <tr>
-                            <td>{$r['titulo']}</td>
-                            <td>{$r['descripcion']}</td>
-                            <td>{$r['imagen']}</td>
-                            <td>{$r['precio']}</td>
-                            <td>{$r['lugar']}</td>
-                            <td>{$r['tipoActividad']}</td>
+                            <td>{$a['ID']}</td>
+                            <td>{$a['nombreAlojamiento']}</td>
+                            <td>{$a['Isla']}</td>
+                            <td>{$a['descripcion']}</td>
+                            <td>{$a['fotos']}</td>
+                            <td>{$a['precio']}</td>
+                            <td>{$a['direccion']}</td>
+                            <td>{$a['max_huespedes']}</td>
+                            <td>{$a['codigoEmpresa']}</td>
                             <td>
-                                <form method='post' action='procesarRecomendacion.php'>
-                                    <input type='hidden' value='Aprobada'>
+                                <form method='get' action=''>
+                                    <input type='hidden' name='alojamientoPendiente' value='Aprobada'>
                                     <button class='btn btn-success btn-sm'>Publicar</button>
                                 </form>
                             </td>
                             <td>
-                                <form method='post' action='procesarRecomendacion.php'>
-                                    <input type='hidden' value='Rechazada'>
+                                <form method='get' action=''>
+                                    <input type='hidden' name='alojamientoPendiente' value='Rechazada'>
                                     <button class='btn btn-success btn-sm'>Publicar</button>
                                 </form>
                             </td>
@@ -225,7 +264,8 @@ function listadoAlojamientosPorAprobar(){
                 </tbody>
             </table>
         </div>
-        <div class="container mt-5">
+    </div>
+    <div class="container mt-5">
         <div id="sec-recomendaciones" class="admin-section">
             <h3 class="section-title">Gestión de usuarios</h3>
             <table class="table align-middle">
@@ -244,7 +284,7 @@ function listadoAlojamientosPorAprobar(){
                 <tbody>
                     <?php
                     $usuarios = listadoUsuarios();
-                    foreach($usuarios as $u){
+                    foreach ($usuarios as $u) {
                         echo "
                         <tr>
                             <td>{$u['nombreUsuario']}</td>
@@ -273,8 +313,8 @@ function listadoAlojamientosPorAprobar(){
                 </tbody>
             </table>
         </div>
-
-        <div class="container mt-5">
+    </div>
+    <div class="container mt-5">
         <div id="sec-recomendaciones" class="admin-section">
             <h3 class="section-title">Reservas vigentes</h3>
             <table class="table align-middle">
@@ -291,7 +331,7 @@ function listadoAlojamientosPorAprobar(){
                 <tbody>
                     <?php
                     $reservas = listadoReservasVigentes();
-                    foreach($reservas as $r){
+                    foreach ($reservas as $r) {
                         echo "
                         <tr>
                             <td>{$r['id']}</td>
@@ -306,8 +346,8 @@ function listadoAlojamientosPorAprobar(){
                 </tbody>
             </table>
         </div>
-
-        <div class="container mt-5">
+    </div>
+    <div class="container mt-5">
         <div id="sec-recomendaciones" class="admin-section">
             <h3 class="section-title">Reservas de alojamientos sin restricción de fecha</h3>
             <table class="table align-middle">
@@ -324,7 +364,7 @@ function listadoAlojamientosPorAprobar(){
                 <tbody>
                     <?php
                     $reservas = listadoAlojamientos();
-                    foreach($reservas as $r){
+                    foreach ($reservas as $r) {
                         echo "
                         <tr>
                             <td>{$r['id']}</td>
@@ -339,23 +379,25 @@ function listadoAlojamientosPorAprobar(){
                 </tbody>
             </table>
         </div>
+    </div>
 
-        <!-- 4. ALOJAMIENTOS -->
-        <div id="sec-alojamientos" class="admin-section">
-            <div class="d-flex justify-content-between">
-                <h3 class="section-title">Alojamientos</h3>
-                <button class="btn btn-outline-primary btn-sm">+ Añadir Casa</button>
-            </div>
-            <div class="row mt-3">
-                <div class="col-md-4">
-                    <div class="card p-3 shadow-sm border-0">
-                        <strong>Villa Oasis</strong>
-                        <p class="mb-0 text-muted small">Maspalomas, Gran Canaria</p>
-                    </div>
+    <!-- 4. ALOJAMIENTOS -->
+    <div id="sec-alojamientos" class="admin-section">
+        <div class="d-flex justify-content-between">
+            <h3 class="section-title">Alojamientos</h3>
+            <button class="btn btn-outline-primary btn-sm">+ Añadir Casa</button>
+        </div>
+        <div class="row mt-3">
+            <div class="col-md-4">
+                <div class="card p-3 shadow-sm border-0">
+                    <strong>Villa Oasis</strong>
+                    <p class="mb-0 text-muted small">Maspalomas, Gran Canaria</p>
                 </div>
             </div>
         </div>
+    </div>
 
     </div>
 </body>
+
 </html>
