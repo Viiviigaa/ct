@@ -38,16 +38,20 @@ ini_set('display_errors', 1);
         if (empty($errores)) {
             try {
                 $conn = conectarBD();
-                $stmt = $conn->query("SELECT nombreUsuario, Contrasena, dni from usuarios");
+                $stmt = $conn->query("SELECT nombreUsuario, Contrasena, dni, Rol from usuarios");
                 $validar = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 foreach ($validar as $u) {
                     if ($u['nombreUsuario'] == $nombre && $u['Contrasena']==$contrasena){
                         $correcta =  true;
                         $_SESSION['dni'] = $u['dni'];
+                        $_SESSION['rol'] = $u['Rol'];
                     }
                 }
                 if($correcta){
                     $_SESSION['usuario'] = $nombre;
+                    if($_SESSION['rol'] == 'admin'){
+                        header('Location: panelAdministador.php');
+                    }
                     header("Location: index.php");
                     exit();
                 }else{
@@ -89,10 +93,8 @@ ini_set('display_errors', 1);
             <button class="btn btn-primary"><a href="registro.php" style='text-decoration: none; color:white; width:150px'>Registrarse</a></button>
         </div>
     </header>
-
-    <div id="sesion-box">
-        <h3>Iniciar sesión</h3>
-        <form action="sesion.php" method="POST">
+    <form action="sesion.php" method="POST">
+            <h3>Iniciar sesión</h3>
             <label for="nombreUsuario">Nombre de ususario:</label><br>
             <input type="text" name="nombreUsuario"  id="nombreUsuario" class="inputIni" placeholder="Ingresa tu nombre de usuario">
             <br>
@@ -110,9 +112,8 @@ ini_set('display_errors', 1);
             ?>
             <br>
             <input type="submit" name="envio" value="Iniciar sesión" id='enviar'>
-        </form>
-        <br>
-    </div>
+    </form>
+    <br>
     <footer>
     </footer>  
 </body>
