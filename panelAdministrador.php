@@ -60,19 +60,9 @@ function listadoAlojamientosPorAprobar(){
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Panel Admin - Canary Travel</title>
     <link rel="stylesheet" href="css/styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
-        /* Estilos para tu cabecera personalizada */
-        header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 10px 20px;
-            background-color: #ffffff;
-            border-bottom: 1px solid #ddd;
-            sticky: top;
-            z-index: 1000;
-        }
         #menuPrincipial {
             display: flex;
             align-items: center;
@@ -106,7 +96,6 @@ function listadoAlojamientosPorAprobar(){
     <!-- TU CABECERA PERSONALIZADA -->
     <header>   
         <img src="static/img/lista.png" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample" width="30" style="cursor:pointer"> 
-        
         <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">  
             <div class="offcanvas-header">    
                 <h5 class="offcanvas-title" id="offcanvasExampleLabel">Gestión Administrador</h5>    
@@ -144,7 +133,6 @@ function listadoAlojamientosPorAprobar(){
             <button class="btn btn-primary"><a href="registro.php" style='text-decoration: none; color:white;'>Registrarse</a></button>
         </div>
     </header>
-
     <div class="container mt-5">
         <div id="sec-recomendaciones" class="admin-section">
             <h3 class="section-title">Moderación de Recomendaciones</h3>
@@ -186,45 +174,120 @@ function listadoAlojamientosPorAprobar(){
                         </tr>";
                     }
                     ?>
-                    <!-- <button class="btn btn-success btn-sm">Publicar</button>
-                    <button class="btn btn-danger btn-sm">Descartar</button> -->
                 </tbody>
             </table>
         </div>
-
-        <!-- 2. USUARIOS -->
-        <div id="sec-usuarios" class="admin-section">
-            <h3 class="section-title">Gestión de Usuarios</h3>
-            <table class="table">
-                <thead>
+        <div class="container mt-5">
+        <div id="sec-recomendaciones" class="admin-section">
+            <h3 class="section-title">Gestión de usuarios</h3>
+            <table class="table align-middle">
+                <thead class="table-light">
                     <tr>
-                        <th>DNI</th>
+                        <th>Nombre de usuario</th>
                         <th>Nombre</th>
+                        <th>Apellidos</th>
+                        <th>DNI</th>
+                        <th>Correo</th>
+                        <th>Telefono</th>
+                        <th>Fecha de nacimiento</th>
                         <th>Rol</th>
-                        <th>Estado</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <!-- Aquí el foreach de PHP -->
+                    <?php
+                    $usuarios = listadoUsuarios();
+                    foreach($usuarios as $u){
+                        echo "
+                        <tr>
+                            <td>{$u['nombreUsuario']}</td>
+                            <td>{$u['nombre']}</td>
+                            <td>{$u['apellidos']}</td>
+                            <td>{$u['dni']}</td>
+                            <td>{$u['Correo']}</td>
+                            <td>{$u['Telefono']}</td>
+                            <td>{$u['FechaNac']}</td>
+                            <td>{$u['Rol']}</td>
+                            <td>
+                                <form method='post' action='procesarRecomendacion.php'>
+                                    <input type='hidden' value='{$u['nombreUsuario']}'>
+                                    <button class='btn btn-success btn-sm'>Modificar</button>
+                                </form>
+                            </td>
+                            <td>
+                                <form method='post' action='procesarRecomendacion.php'>
+                                    <input type='hidden' value='{$u['nombreUsuario']}'>
+                                    <button class='btn btn-success btn-sm'>Eliminar</button>
+                                </form>
+                            </td>
+                        </tr>";
+                    }
+                    ?>
                 </tbody>
             </table>
         </div>
 
-        <!-- 3. RESERVAS -->
-        <div id="sec-reservas" class="admin-section">
-            <h3 class="section-title">Reservas del Sistema</h3>
-            <div class="alert alert-info">Total de reservas activas hoy: 12</div>
-            <table class="table table-hover">
-                <thead>
+        <div class="container mt-5">
+        <div id="sec-recomendaciones" class="admin-section">
+            <h3 class="section-title">Reservas vigentes</h3>
+            <table class="table align-middle">
+                <thead class="table-light">
                     <tr>
-                        <th>Ref</th>
-                        <th>Cliente</th>
-                        <th>Alojamiento</th>
-                        <th>Check-in</th>
+                        <th>ID Reserva</th>
+                        <th>ID Alojamiento</th>
+                        <th>Fecha de inicio</th>
+                        <th>Fecha final</th>
+                        <th>Cantidad de huéspedes</th>
+                        <th>DNI</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <!-- Datos -->
+                    <?php
+                    $reservas = listadoReservasVigentes();
+                    foreach($reservas as $r){
+                        echo "
+                        <tr>
+                            <td>{$r['id']}</td>
+                            <td>{$r['nombidAlojamiento']}</td>
+                            <td>{$r['fechaInicio']}</td>
+                            <td>{$r['fechaFinal']}</td>
+                            <td>{$r['cantidadHuespedes']}</td>
+                            <td>{$r['dniReserva']}</td>
+                        </tr>";
+                    }
+                    ?>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="container mt-5">
+        <div id="sec-recomendaciones" class="admin-section">
+            <h3 class="section-title">Reservas de alojamientos sin restricción de fecha</h3>
+            <table class="table align-middle">
+                <thead class="table-light">
+                    <tr>
+                        <th>ID Reserva</th>
+                        <th>ID Alojamiento</th>
+                        <th>Fecha de inicio</th>
+                        <th>Fecha final</th>
+                        <th>Cantidad de huéspedes</th>
+                        <th>DNI</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
+                    $reservas = listadoAlojamientos();
+                    foreach($reservas as $r){
+                        echo "
+                        <tr>
+                            <td>{$r['id']}</td>
+                            <td>{$r['nombidAlojamiento']}</td>
+                            <td>{$r['fechaInicio']}</td>
+                            <td>{$r['fechaFinal']}</td>
+                            <td>{$r['cantidadHuespedes']}</td>
+                            <td>{$r['dniReserva']}</td>
+                        </tr>";
+                    }
+                    ?>
                 </tbody>
             </table>
         </div>
@@ -246,7 +309,5 @@ function listadoAlojamientosPorAprobar(){
         </div>
 
     </div>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
