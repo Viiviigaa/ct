@@ -116,7 +116,6 @@ ini_set('display_errors', 1);
                 'fechaNac' => $fechaNac,
                 'rol' => "base"
             ]);
-            enviarEmail($correo,'Confirmación de registro', 'Su cuenta ha sido registrada con éxito','');
             header('Location:registroCompletado.php');
         } catch (PDOException $e) {
             echo "Ha ocurrido un error al conectar con base de datos";
@@ -204,7 +203,7 @@ ini_set('display_errors', 1);
                 <input type="date" name="fechaNac" id="fechaNac" class="inputIni" value="<?= htmlspecialchars($_POST['fechaNac'] ?? '') ?>">
                 <?= $errores['fechaNac'] ?? '' ?>
             </div>
-            <input type="submit" value="Registrarse" class="btn btn-primary">    
+            <input type="submit" value="Registrarse" id="submitRegister" class="btn btn-primary">    
         </form>    
     </div>
 </main>
