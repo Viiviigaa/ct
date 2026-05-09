@@ -9,15 +9,6 @@
         $alojamientoEncontrados = $stmt->fetchAll(PDO::FETCH_ASSOC);
         return $alojamientoEncontrados;
     }
-
-    function mostrarTodasRecomendaciones() {
-            $conn = conectarBD();
-            $sql = "SELECT * FROM recomendaciones";
-            $stmt = $conn->prepare($sql);
-            $stmt->execute();
-            return $stmt->fetchAll(PDO::FETCH_ASSOC);
-        }
-
     function mostrarRecomendaciones($isla, $tipoActividad) {
         $conn = conectarBD();
         $sql = "SELECT * FROM recomendaciones WHERE 1=1";

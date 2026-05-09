@@ -169,11 +169,9 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
         </div>
         <div class="row g-5">
             <?php
-                mostrarTodasRecomendaciones();
-                if($_SERVER['REQUEST_METHOD'] == 'POST'){
-                    $isla = $_POST['isla'] ?? ''; 
-                    $tipoAc = $_POST['tipoAc'] ?? '';
-
+                $isla = $_POST['isla'] ?? ''; 
+                $tipoAc = $_POST['tipoAc'] ?? '';
+                if(!empty($recomendaciones)){
                     $recomendaciones = mostrarRecomendaciones($isla, $tipoAc);
                     foreach($recomendaciones as $r){
                         echo "
@@ -186,17 +184,17 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
                                         <img src='{$r['imagen']}' alt='{$r['titulo']}' style='width: 100%; height: 100%; object-fit: cover;'>
                                     </div>
                                     <div class='card-body d-flex flex-column'>
-                                        <h5 class='card-title fw-bold text-primary'>{$r['titulo']}</h5>
-                                        <p class='text-muted mb-1 small'>
-                                            <i class='bi bi-geo-alt'></i> {$r['lugar']}
-                                        </p>
-                                        <p class='card-text text-dark'>{$r['descripcion']}</p>
-                                        <span class='badge rounded-pill bg-success p-2 px-3'>
-                                            {$r['precio']}€ por persona
-                                        </span>
-                                    </div>
+                                    <h5 class='card-title fw-bold text-primary'>{$r['titulo']}</h5>
+                                    <p class='text-muted mb-1 small'>
+                                        <i class='bi bi-geo-alt'></i> {$r['lugar']}
+                                    </p>
+                                    <p class='card-text text-dark'>{$r['descripcion']}</p>
+                                    <span class='badge rounded-pill bg-success p-2 px-3'>
+                                        {$r['precio']}€ por persona
+                                    </span>
                                 </div>
-                            </div>";
+                            </div>
+                        </div>";
                     }
                 }
             ?>
