@@ -169,6 +169,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
         </div>
         <div class="row g-5">
             <?php
+                mostrarAlojamientos(null, null);
                 if($_SERVER['REQUEST_METHOD'] == 'POST'){
                     $isla = $_POST['isla'] ?? ''; 
                     $tipoAc = $_POST['tipoAc'] ?? '';
