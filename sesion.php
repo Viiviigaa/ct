@@ -110,7 +110,7 @@ ini_set('display_errors', 1);
                  echo "<span style='color:red'>{$errores['contrasena']}</span>";
             } 
             ?>
-            <input type="submit" name="envio" value="Iniciar sesión">
+            <input type="submit" class="btn btn-primary" name="envio" value="Iniciar sesión">
     </form>
     <br>
     <footer>
