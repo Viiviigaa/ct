@@ -700,7 +700,7 @@ $pendientes        = count(array_filter($recomendaciones, fn($r) => $r['estado']
                         <?php endif; ?>
                         <?php if (!empty($rec['isla'])): ?>
                             <span><i class="bi bi-geo-alt"></i> <?= htmlspecialchars($rec['isla']) ?></span>
-                        <?php endif; ?>
+                        <?php endif; ?>s
                         <?php if (!empty($rec['usuario'])): ?>
                             <span><i class="bi bi-person"></i> <?= htmlspecialchars($rec['usuario']) ?></span>
                         <?php endif; ?>
