@@ -4,6 +4,53 @@ if (!isset($_SESSION['rol']) || $_SESSION['rol'] !== 'administrador') {
     header("Location: index.php");
     exit();
 }
+
+function recomendacionesPorAprobar(){
+    $conn = conectarBD();
+    $query = "SELECT  * from recomendacionesPendientes";
+    $stmt = $conn->prepare($query);
+    $stmt->execute();
+    $resultado = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    return $resultado;
+}
+
+function listadoUsuarios(){
+    $conn = conectarBD();
+    $query = "SELECT * FROM usuarios";
+    $stmt = $conn->prepare($query);
+    $stmt->execute();
+    $resultado = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    return $resultado;
+}
+
+function listadoReservasVigentes(){
+    $conn = conectarBD();
+    $hoy = new DateTime(); 
+    $hoy =  $hoy->format('Y-m-d');
+    $query = "SELECT * FROM reservas where fechaInicio>= ? and fechaFin <=?";
+    $stmt = $conn->prepare($query);
+    $stmt->execute([$hoy, $hoy]);
+    $resultado = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    return $resultado; 
+}
+
+function listadoAlojamientos(){
+    $conn = conectarBD();
+    $query = "SELECT * FROM alojamientos";
+    $stmt = $conn->prepare($query);
+    $stmt->execute();
+    $resultado = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    return $resultado; 
+}
+
+function listadoAlojamientosPorAprobar(){
+    $conn = conectarBD();
+    $query = "SELECT * FROM alojamientosPendientes";
+    $stmt = $conn->prepare($query);
+    $stmt->execute();
+    $resultado = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    return $resultado; 
+}
 ?>
 
 <!DOCTYPE html>
@@ -12,6 +59,7 @@ if (!isset($_SESSION['rol']) || $_SESSION['rol'] !== 'administrador') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Panel Admin - Canary Travel</title>
+    <link rel="stylesheet" href="css/styles.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         /* Estilos para tu cabecera personalizada */
@@ -61,7 +109,7 @@ if (!isset($_SESSION['rol']) || $_SESSION['rol'] !== 'administrador') {
         
         <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">  
             <div class="offcanvas-header">    
-                <h5 class="offcanvas-title" id="offcanvasExampleLabel">Gestión Admin</h5>    
+                <h5 class="offcanvas-title" id="offcanvasExampleLabel">Gestión Administrador</h5>    
                 <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Cerrar"></button>  
             </div>  
             <div class="offcanvas-body d-flex flex-column">    
@@ -72,9 +120,12 @@ if (!isset($_SESSION['rol']) || $_SESSION['rol'] !== 'administrador') {
                     <li class="list-group-item"><a href="#sec-reservas">Control de Reservas</a></li>
                     <li class="list-group-item"><a href="#sec-alojamientos">Alojamientos</a></li>
                     <hr>
-                    <li class="list-group-item"><a href="informacionCuenta.php">Mi cuenta</a></li> 
-                    <li class="list-group-item"><a href="misReservas.php">Mis reservas</a></li>    
-                    <li class="list-group-item"><a href="recomendaciones.php">Recomendaciones Públicas</a></li>  
+                    <li class="list-group-item"><strong>NAVEGACIÓN DE LA APLICACIÓN</strong></li>
+                    <li class="list-group-item"><a href="index.php">Alojamientos</a></li>    
+                    <li class="list-group-item"><a href="recomendaciones.php">Recomendaciones Públicas</a></li> 
+                    <li class="list-group-item"><a href="busquedaVuelos.php">Vuelos</a></li>
+                    <li class="list-group-item"><a href="renting.php">Alquiler de coches</a></li>
+                    <li class="list-group-item"><a href="ferrys.php">Ferrys</a></li>
                 </ul> 
                 <ul class="list-group mt-auto">
                     <li class="list-group-item"><a href="logout.php" style='text-decoration: none; color:black'>Cerrar sesión</a></li>
@@ -95,29 +146,48 @@ if (!isset($_SESSION['rol']) || $_SESSION['rol'] !== 'administrador') {
     </header>
 
     <div class="container mt-5">
-        
-        <!-- 1. MODERACIÓN DE RECOMENDACIONES -->
         <div id="sec-recomendaciones" class="admin-section">
             <h3 class="section-title">Moderación de Recomendaciones</h3>
             <table class="table align-middle">
                 <thead class="table-light">
                     <tr>
-                        <th>Usuario</th>
-                        <th>Comentario</th>
-                        <th>Fecha</th>
-                        <th>Acción</th>
+                        <th>Titulo</th>
+                        <th>Descripcion</th>
+                        <th>Imagen</th>
+                        <th>Precio</th>
+                        <th>Lugar</th>
+                        <th>Tipo de actividad</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>Carlos Santana</td>
-                        <td>"El apartamento en Corralejo fue fantástico."</td>
-                        <td>2024-03-14</td>
-                        <td>
-                            <button class="btn btn-success btn-sm">Publicar</button>
-                            <button class="btn btn-danger btn-sm">Descartar</button>
-                        </td>
-                    </tr>
+                    <?php
+                    $recommend = recomendacionesPorAprobar();
+                    foreach($recommend as $r){
+                        echo "
+                        <tr>
+                            <td>{$r['titulo']}</td>
+                            <td>{$r['descripcion']}</td>
+                            <td>{$r['imagen']}</td>
+                            <td>{$r['precio']}</td>
+                            <td>{$r['lugar']}</td>
+                            <td>{$r['tipoActividad']}</td>
+                            <td>
+                                <form method='post' action='procesarRecomendacion.php'>
+                                    <input type='hidden' value='Aprobada'>
+                                    <button class='btn btn-success btn-sm'>Publicar</button>
+                                </form>
+                            </td>
+                            <td>
+                                <form method='post' action='procesarRecomendacion.php'>
+                                    <input type='hidden' value='Rechazada'>
+                                    <button class='btn btn-success btn-sm'>Publicar</button>
+                                </form>
+                            </td>
+                        </tr>";
+                    }
+                    ?>
+                    <!-- <button class="btn btn-success btn-sm">Publicar</button>
+                    <button class="btn btn-danger btn-sm">Descartar</button> -->
                 </tbody>
             </table>
         </div>

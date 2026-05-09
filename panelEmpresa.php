@@ -29,7 +29,7 @@ function iniciarSesion($conn, $username, $password)
 function nuevoAlojamiento($conn, $nombre, $isla, $descripcion, $fotos, $precio, $huespedes, $direccion, $codigoEmpresa)
 {
     try {
-        $query = "INSERT INTO alojamientos (nombreAlojamiento, isla, descripcion, fotos, precio, direccion, max_huespedes, codigoEmpresa) 
+        $query = "INSERT INTO alojamientosPendientes (nombreAlojamiento, isla, descripcion, fotos, precio, direccion, max_huespedes, codigoEmpresa) 
                   VALUES (?, ?, ?, ?, ?, ?, ?,?)";
         $stmt = $conn->prepare($query);
 
