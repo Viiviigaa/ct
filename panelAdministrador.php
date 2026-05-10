@@ -121,7 +121,7 @@ if($_SERVER['REQUEST_METHOD'] == 'GET'){
     if(isset($_GET['nombreUsuario'])){
         if(isset($_GET['accion']) && $_GET['accion']=='Modificar'){
             //Aquí iría la funcion que permite desplegar los valores qe tiene el formulario y que sean editados
-        }else if(isset($_GET['accion']) && $_GET['accion']=='e+liminar'){
+        }else if(isset($_GET['accion']) && $_GET['accion']=='eliminar'){
             //Eliminamos con nombre de usuario en vez de el ID porque es la primary key de la tabla. 
             eliminarUsuarios($_GET['nombreUsuario']); 
         }
@@ -480,7 +480,7 @@ if($_SERVER['REQUEST_METHOD'] == 'GET'){
         <div id="sec-alojamientos" class="admin-section">
             <div class="d-flex justify-content-between">
                 <h3 class="section-title">Moderación de alojamientos</h3>
-                <button class="btn btn-outline-primary btn-sm">+ Añadir Casa</button>
+                <button class="btn btn-outline-primary btn-sm">+ Añadir alojamiento</button>
             </div>
             <br>
             <div class="table-responsive">
