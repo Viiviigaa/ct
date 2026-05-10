@@ -180,6 +180,15 @@ function actualizarDatosUsuario($nombre, $apellidos, $dni, $correo, $telefono, $
     header('Location: ' . $_SERVER['PHP_SELF']);
 }
 
+function listarDestinos(){
+    $conn = conectarBD();
+    $query = "SELECT nombre from destinos";
+    $stmt = $conn->prepare($query);
+    $stmt->execute();
+    $resultado = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    return $resultado; 
+}
+
 if($_SERVER['REQUEST_METHOD'] == 'POST'){
     //APROBAR O DENEGAR UNA NUEVO RECOMENDACIÓN
     if(isset($_POST['recomendacionPendiente']) && isset($_POST['recomendacionPendienteVal'])){
@@ -697,6 +706,66 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
                     <button type="submit" name="accion_update_user" class="btn btn-primary">Guardar Cambios</button>
+                </div>
+
+            <div class="modal fade" id="modalEditarUsuario" tabindex="-1" aria-labelledby="modalEditarUsuarioLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="insertarAlojamienti">Añadir nuevo alojamiento</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form action="" method="POST">
+                <div class="modal-body">
+                    <div class="row">                
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Nombre del alojamiento</label>
+                            <input type="text" name="nombre_aloj" id="edit_username" class="form-control" required>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Isla</label>
+                            <select class="form-control" name="destino_aloj">
+                                <?php
+                                    $destinos = listarDestinos();
+                                    foreach($destinos as $d){
+                                        echo "<option value='{$r['nombre']}'>{$r['nombre']}</option>";
+                                    }
+                                ?>
+                            </select>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Descripcion</label>
+                            <input type="text" name="descripcion_aloj" class="form-control">
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">DNI</label>
+                            <input type="text" name="dni_aloj"  class="form-control">
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Fotos</label>
+                            <input type="text" name="fotos-aloj"  class="form-control">
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Precio</label>
+                            <input type="email" name="precio_aloj"  class="form-control">
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Dirección</label>
+                            <input type="text" name="direccion_aloj"  class="form-control">
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Cantidad máxima de huéspedes</label>
+                            <input type="date" name="huespedes_aloj"  class="form-control">
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Código de empresa</label>
+                            <input type="date" name="empresa_aloj"  class="form-control">
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="submit" name="alta_aloj" class="btn btn-primary">Guardar Cambios</button>
                 </div>
             </form>
             </div>
