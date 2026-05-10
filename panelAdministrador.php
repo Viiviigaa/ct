@@ -326,7 +326,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
                             <td>{$r['id']}</td>
                             <td>{$r['titulo']}</td>
                             <td>{$r['descripcion']}</td>
-                            <td style='overflow-x: auto; max-width: 100px'><a href='{$r['imagen']}>Ver imagen</a></td>
+                            <td style='overflow-x: auto; max-width: 100px'><a href='{$r['imagen']}'>Ver imagen</a></td>
                             <td>{$r['precio']}</td>
                             <td>{$r['lugar']}</td>
                             <td>{$r['tipoActividad']}</td>
