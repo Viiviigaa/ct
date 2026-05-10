@@ -410,52 +410,54 @@ function listadoAlojamientosPorAprobar(){
                 <button class="btn btn-outline-primary btn-sm">+ Añadir Casa</button>
             </div>
             <br>
-            <table class="table align-middle">
-                <thead class="table-light">
-                    <tr>
-                        <th>ID</th>
-                        <th>Nombre del alojamiento</th>
-                        <th>Isla</th>
-                        <th>Descripción</th>
-                        <th>Fotos</th>
-                        <th>Precio</th>
-                        <th>Dirección</th>
-                        <th>Cantidad máxima de huéspedes</th>
-                        <th>Código de empresa</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php
-                    $alojamientos = listadoAlojamientos();
-                    foreach ($alojamientos as $a) {
-                        echo "
+            <div class="table-responsive">
+                <table class="table align-middle">
+                    <thead class="table-light">
                         <tr>
-                            <td>{$a['ID']}</td>
-                            <td>{$a['nombreAlojamiento']}</td>
-                            <td>{$a['Isla']}</td>
-                            <td>{$a['descripcion']}</td>
-                            <td>{$a['fotos']}</td>
-                            <td>{$a['precio']}</td>
-                            <td>{$a['direccion']}</td>
-                            <td>{$a['max_huespedes']}</td>
-                            <td>{$a['codigoEmpresa']}</td>
-                            <td>
-                                <form method='get' action=''>
-                                    <input type='hidden' name='alojamientoPendiente' value='Aprobada'>
-                                    <button class='btn btn-success btn-sm'>Publicar</button>
-                                </form>
-                            </td>
-                            <td>
-                                <form method='get' action=''>
-                                    <input type='hidden' name='alojamientoPendiente' value='Rechazada'>
-                                    <button class='btn btn-success btn-sm'>Publicar</button>
-                                </form>
-                            </td>
-                        </tr>";
-                    }
-                    ?>
-                </tbody>
-            </table>
+                            <th>ID</th>
+                            <th>Nombre del alojamiento</th>
+                            <th>Isla</th>
+                            <th>Descripción</th>
+                            <th>Fotos</th>
+                            <th>Precio</th>
+                            <th>Dirección</th>
+                            <th>Cantidad máxima de huéspedes</th>
+                            <th>Código de empresa</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php
+                        $alojamientos = listadoAlojamientos();
+                        foreach ($alojamientos as $a) {
+                            echo "
+                            <tr>
+                                <td>{$a['ID']}</td>
+                                <td>{$a['nombreAlojamiento']}</td>
+                                <td>{$a['Isla']}</td>
+                                <td>{$a['descripcion']}</td>
+                                <td>{$a['fotos']}</td>
+                                <td>{$a['precio']}</td>
+                                <td>{$a['direccion']}</td>
+                                <td>{$a['max_huespedes']}</td>
+                                <td>{$a['codigoEmpresa']}</td>
+                                <td>
+                                    <form method='get' action=''>
+                                        <input type='hidden' name='alojamientoPendiente' value='Aprobada'>
+                                        <button class='btn btn-success btn-sm'>Publicar</button>
+                                    </form>
+                                </td>
+                                <td>
+                                    <form method='get' action=''>
+                                        <input type='hidden' name='alojamientoPendiente' value='Rechazada'>
+                                        <button class='btn btn-success btn-sm'>Publicar</button>
+                                    </form>
+                                </td>
+                            </tr>";
+                        }
+                        ?>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </body>
