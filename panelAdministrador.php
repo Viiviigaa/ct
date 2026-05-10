@@ -1,5 +1,6 @@
 <?php
 include 'conectar.php';
+
 session_start();
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
@@ -146,11 +147,19 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
     //APROBAR O DENEGAR UNA NUEVO RECOMENDACIÓN
     if(isset($_POST['recomendacionPendiente']) && isset($_POST['recomendacionPendienteVal'])){
         if($_POST['recomendacionPendienteVal'] == 'Publicar'){
-            $recom = recomendacionPendienteAInsertar($_POST['recomendacionPendiente']);
-            insertarRecomendacion($recom['titulo'],$recom['descripcion'], $recom['imagen'], $recom['precio'], $recom['lugar'], $recom['tipoActividad']);
-            eliminarRecomendacionPendiente($_POST['recomendacionPendiente']);
+            try{
+                $recom = recomendacionPendienteAInsertar($_POST['recomendacionPendiente']);
+                insertarRecomendacion($recom['titulo'],$recom['descripcion'], $recom['imagen'], $recom['precio'], $recom['lugar'], $recom['tipoActividad']);
+                eliminarRecomendacionPendiente($_POST['recomendacionPendiente']);
+            }catch(PDOException $e){
+                echo "Error: " . $e->getMessage();
+            }
         }else{
-            eliminarRecomendacionPendiente($_POST['recomendacionPendiente']);
+            try{
+                eliminarRecomendacionPendiente($_POST['recomendacionPendiente']);
+            }catch(PDOException $e){
+                echo "Error: " . $e->getMessage();
+            }
         }
     }
     //Modificar o eliminar un usuario
@@ -166,7 +175,11 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
             $telefono    = $_POST['upd_telefono'];
             $fecha       = $_POST['upd_fecha'];
             $rol         = $_POST['upd_rol'];
-            actualizarDatosUsuario($nuevo_user, $nombre, $apellidos, $dni, $correo, $telefono, $fecha, $rol); 
+            try{
+                actualizarDatosUsuario($nuevo_user, $nombre, $apellidos, $dni, $correo, $telefono, $fecha, $rol); 
+            }catch(PDOException $e){
+                echo "Error: " . $e->getMessage();
+            }
         }else if(isset($_POST['accion']) && $_POST['accion']=='eliminar'){
             //Eliminamos con nombre de usuario en vez de el ID porque es la primary key de la tabla. 
             eliminarUsuarios($_POST['nombreUsuario']); 
@@ -174,9 +187,8 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
     }
 }
 ?>
-<!DOCTYPE html>+
+<!DOCTYPE html>
 <html lang="es">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
