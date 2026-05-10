@@ -735,10 +735,6 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
                             <label class="form-label">Descripción</label>
                             <input type="text" name="descripcion_aloj" class="form-control">
                         </div>
-                        <div class="col-md-6 mb-3">
-                            <label class="form-label">DNI Propietario</label>
-                            <input type="text" name="dni_aloj" class="form-control">
-                        </div>
                         <div class='col-md-6 mb-3'>
                                 <label class='form-label d-block'>Imagen del hotel</label>
                                 <input type='hidden' name='imagen' id='input_url_imagen' required>
