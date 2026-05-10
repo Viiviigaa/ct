@@ -439,7 +439,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
                                 <td>{$a['nombreAlojamiento']}</td>
                                 <td>{$a['isla']}</td>
                                 <td>{$a['descripcion']}</td>
-                                <td>{$a['fotos']}</td>
+                                <td><a href='{$a['fotos']}'>Ver imagenes</a></td>
                                 <td>{$a['precio']}</td>
                                 <td>{$a['direccion']}</td>
                                 <td>{$a['max_huespedes']}</td>
