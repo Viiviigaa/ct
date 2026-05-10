@@ -319,7 +319,6 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
         }
     </style>
 </head>
-
 <body>
     <header>
         <img src="static/img/lista.png" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample" width="30" style="cursor:pointer">
@@ -744,9 +743,15 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
                             <label class="form-label">DNI Propietario</label>
                             <input type="text" name="dni_aloj" class="form-control">
                         </div>
-                        <div class="col-md-6 mb-3">
-                            <label class="form-label">URL Fotos</label>
-                            <input type="text" name="fotos-aloj" class="form-control">
+                        <div class='col-md-3'>
+                                <label class='form-label d-block'>Imagen del hotel</label>
+                                <input type='hidden' name='imagen' id='input_url_imagen' required>
+                                <button type='button' id='upload_widget' class='btn btn-outline-primary w-100'>
+                                    <i class='bi bi-camera'></i> Seleccionar Imagen
+                                </button>
+                                <div id='preview_container' class='mt-2' style='display:none;'>
+                                    <span class='badge bg-success'>Imagen cargada correctamente</span>
+                                </div>
                         </div>
                         <div class="col-md-6 mb-3">
                             <label class="form-label">Precio</label>
@@ -774,6 +779,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
             </div>
         </div>
     </div>
+    <script src="https://upload-widget.cloudinary.com/global/all.js" type="text/javascript"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             const editButtons = document.querySelectorAll('.btn-edit');
@@ -806,6 +812,31 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
                 });
             });
         });
+
+        var myWidget = cloudinary.createUploadWidget({
+        cloudName: 'dkbepwbpj', 
+        uploadPreset: 'canary'
+        }, (error, result) => { 
+        if (!error && result && result.event === "success") { 
+            console.log('Imagen subida con éxito: ', result.info.secure_url);
+            
+            const inputImagen = document.getElementById('input_url_imagen');
+            const preview = document.getElementById('preview_container');
+            const btnWidget = document.getElementById('upload_widget');
+
+            inputImagen.value = result.info.secure_url;
+
+            // 3. Feedback visual
+            preview.style.display = 'block';
+            btnWidget.innerText = 'Cambiar Imagen';
+            btnWidget.classList.replace('btn-outline-primary', 'btn-outline-secondary');
+        }
+    });
+
+    document.getElementById("upload_widget").addEventListener("click", function(e){
+        e.preventDefault();
+        myWidget.open();
+    }, false);
     </script>
 </body>
 </html>

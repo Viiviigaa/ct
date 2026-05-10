@@ -242,7 +242,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['nombre_alojamiento'])){
                                 <div id='preview_container' class='mt-2' style='display:none;'>
                                     <span class='badge bg-success'>Imagen cargada correctamente</span>
                                 </div>
-                            </div>
+                        </div>
                         <div class="col-md-1 d-flex align-items-end">
                             <button type="submit" name="enviarAlojamiento" class="btn btn-primary w-100 py-2">
                                 <i class="bi bi-save"></i> Guardar
