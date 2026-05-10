@@ -78,7 +78,7 @@ function informacionAlojamiento($id){
 function nuevoAlojamiento($nombre, $isla, $descripcion, $fotos, $precio, $huespedes, $direccion, $codigoEmpresa){
     $conn = conectarBD();
     try {
-        $query = "INSERT INTO alojamientos (nombreAlojamiento, isla, descripcion, fotos, precio, direccion, max_huespedes, codigoEmpresa) 
+        $query = "INSERT INTO alojamientos (nombreAlojamiento, isla, descripcion, fotos, precio,max_huespedes,direccion, codigoEmpresa) 
                   VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
         $stmt = $conn->prepare($query);
         $resultado = $stmt->execute([
