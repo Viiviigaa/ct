@@ -168,7 +168,6 @@ function actualizarDatosUsuario($nombre, $apellidos, $dni, $correo, $telefono, $
              WHERE nombreUsuario = ?";
     $stmt = $conn->prepare($query);
     $stmt->execute([
-        $nombreUsuario,
         $nombre,
         $apellidos, 
         $dni,
