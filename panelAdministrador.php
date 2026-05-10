@@ -6,8 +6,7 @@ if (!isset($_SESSION['rol']) || $_SESSION['rol'] !== 'administrador') {
     exit();
 }
 
-function recomendacionesPorAprobar()
-{
+function recomendacionesPorAprobar(){
     $conn = conectarBD();
     $query = "SELECT  * from recomendacionesPendientes";
     $stmt = $conn->prepare($query);
@@ -16,8 +15,7 @@ function recomendacionesPorAprobar()
     return $resultado;
 }
 
-function listadoUsuarios()
-{
+function listadoUsuarios(){
     $conn = conectarBD();
     $query = "SELECT * FROM usuarios";
     $stmt = $conn->prepare($query);
@@ -26,8 +24,7 @@ function listadoUsuarios()
     return $resultado;
 }
 
-function listadoReservasVigentes()
-{
+function listadoReservasVigentes(){
     $conn = conectarBD();
     $hoy = new DateTime();
     $hoy =  $hoy->format('Y-m-d');
@@ -38,8 +35,7 @@ function listadoReservasVigentes()
     return $resultado;
 }
 
-function listadoAlojamientos()
-{
+function listadoAlojamientos(){
     $conn = conectarBD();
     $query = "SELECT * FROM alojamientos";
     $stmt = $conn->prepare($query);
@@ -48,8 +44,7 @@ function listadoAlojamientos()
     return $resultado;
 }
 
-function listadoAlojamientosPorAprobar()
-{
+function listadoAlojamientosPorAprobar(){
     $conn = conectarBD();
     $query = "SELECT * FROM alojamientosPendientes";
     $stmt = $conn->prepare($query);
@@ -57,8 +52,9 @@ function listadoAlojamientosPorAprobar()
     $resultado = $stmt->fetchAll(PDO::FETCH_ASSOC);
     return $resultado;
 }
-?>
 
+
+?>
 <!DOCTYPE html>
 <html lang="es">
 
@@ -186,7 +182,8 @@ function listadoAlojamientosPorAprobar()
                 <tbody>
                     <?php
                     $recommend = recomendacionesPorAprobar();
-                    foreach ($recommend as $r) {
+                    if(!empty($recommend)){
+                        foreach ($recommend as $r) {
                         echo "
                         <tr>
                             <td>{$r['titulo']}</td>
@@ -208,6 +205,7 @@ function listadoAlojamientosPorAprobar()
                                 </form>
                             </td>
                         </tr>";
+                    }
                     }
                     ?>
                 </tbody>
@@ -234,31 +232,33 @@ function listadoAlojamientosPorAprobar()
                 <tbody>
                     <?php
                     $alojamientos = listadoAlojamientosPorAprobar();
-                    foreach ($alojamientos as $a) {
-                        echo "
-                        <tr>
-                            <td>{$a['ID']}</td>
-                            <td>{$a['nombreAlojamiento']}</td>
-                            <td>{$a['Isla']}</td>
-                            <td>{$a['descripcion']}</td>
-                            <td>{$a['fotos']}</td>
-                            <td>{$a['precio']}</td>
-                            <td>{$a['direccion']}</td>
-                            <td>{$a['max_huespedes']}</td>
-                            <td>{$a['codigoEmpresa']}</td>
-                            <td>
-                                <form method='get' action=''>
-                                    <input type='hidden' name='alojamientoPendiente' value='Aprobada'>
-                                    <button class='btn btn-success btn-sm'>Publicar</button>
-                                </form>
-                            </td>
-                            <td>
-                                <form method='get' action=''>
-                                    <input type='hidden' name='alojamientoPendiente' value='Rechazada'>
-                                    <button class='btn btn-success btn-sm'>Publicar</button>
-                                </form>
-                            </td>
-                        </tr>";
+                    if(!empty($alojamientos)){
+                        foreach ($alojamientos as $a) {
+                            echo "
+                            <tr>
+                                <td>{$a['ID']}</td>
+                                <td>{$a['nombreAlojamiento']}</td>
+                                <td>{$a['Isla']}</td>
+                                <td>{$a['descripcion']}</td>
+                                <td>{$a['fotos']}</td>
+                                <td>{$a['precio']}</td>
+                                <td>{$a['direccion']}</td>
+                                <td>{$a['max_huespedes']}</td>
+                                <td>{$a['codigoEmpresa']}</td>
+                                <td>
+                                    <form method='get' action=''>
+                                        <input type='hidden' name='alojamientoPendiente' value='Aprobada'>
+                                        <button class='btn btn-success btn-sm'>Publicar</button>
+                                    </form>
+                                </td>
+                                <td>
+                                    <form method='get' action=''>
+                                        <input type='hidden' name='alojamientoPendiente' value='Rechazada'>
+                                        <button class='btn btn-success btn-sm'>Publicar</button>
+                                    </form>
+                                </td>
+                            </tr>";
+                        }
                     }
                     ?>
                 </tbody>
@@ -316,7 +316,7 @@ function listadoAlojamientosPorAprobar()
     </div>
     <div class="container mt-5">
         <div id="sec-recomendaciones" class="admin-section">
-            <h3 class="section-title">Listado de alojamientos</h3>
+            <h3 class="section-title">Reservas vigentes</h3>
             <table class="table align-middle">
                 <thead class="table-light">
                     <tr>
@@ -367,12 +367,14 @@ function listadoAlojamientosPorAprobar()
                     foreach ($reservas as $r) {
                         echo "
                         <tr>
-                            <td>{$r['id']}</td>
+                            <td>{$r['ID']}</td>
                             <td>{$r['nombidAlojamiento']}</td>
-                            <td>{$r['fechaInicio']}</td>
-                            <td>{$r['fechaFinal']}</td>
-                            <td>{$r['cantidadHuespedes']}</td>
-                            <td>{$r['dniReserva']}</td>
+                            <td>{$r['isla']}</td>
+                            <td>{$r['descripcion']}</td>
+                            <td>{$r['fotos']}</td>
+                            <td>{$r['direccion']}</td>
+                            <td>{$r['max_huespedes']}</td>
+                            <td>{$r['codigoEmpresa']}</td>
                         </tr>";
                     }
                     ?>
@@ -387,6 +389,7 @@ function listadoAlojamientosPorAprobar()
                 <h3 class="section-title">Moderación de alojamientos</h3>
                 <button class="btn btn-outline-primary btn-sm">+ Añadir Casa</button>
             </div>
+            <br>
             <table class="table align-middle">
                 <thead class="table-light">
                     <tr>
@@ -403,7 +406,7 @@ function listadoAlojamientosPorAprobar()
                 </thead>
                 <tbody>
                     <?php
-                    $alojamientos = listadoAlojamientosPorAprobar();
+                    $alojamientos = listadoAlojamientos();
                     foreach ($alojamientos as $a) {
                         echo "
                         <tr>
