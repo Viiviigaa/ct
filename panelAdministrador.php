@@ -445,14 +445,14 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
                                 <td>{$a['max_huespedes']}</td>
                                 <td>{$a['codigoEmpresa']}</td>
                                 <td>
-                                    <form method='get' action=''>
+                                    <form method='post' action=''>
                                     <input type='hidden' value='{$a['ID']}' name='alojamientoID'>
                                         <input type='hidden' name='alojamientoPendiente' value='Aprobada'>
                                         <button type='submit' class='btn btn-success btn-sm'>Publicar</button>
                                     </form>
                                 </td>
                                 <td>
-                                    <form method='get' action=''>
+                                    <form method='post' action=''>
                                         <input type='hidden' value='{$a['ID']}' name='alojamientoID'>
                                         <input type='hidden' name='alojamientoPendiente' value='Rechazada'>
                                         <button type='submit' class='btn btn-success btn-sm'>Rechazar</button>
@@ -500,18 +500,20 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
                             <td>{$u['FechaNac']}</td>
                             <td>{$u['Rol']}</td>
                             <td>
-                                <button type='submit' 
-                                    class='btn btn-success btn-sm btn-edit' 
-                                    data-username='{$u['nombreUsuario']}'
-                                    data-nombre='{$u['nombre']}'
-                                    data-apellidos='{$u['apellidos']}'
-                                    data-dni='{$u['dni']}'
-                                    data-correo='{$u['Correo']}'
-                                    data-telefono='{$u['Telefono']}'
-                                    data-fecha='{$u['FechaNac']}'
-                                    data-rol='{$u['Rol']}'>
-                                    Modificar
-                                </button>
+                                <form action='' method='post'>
+                                    <button type='submit' 
+                                        class='btn btn-success btn-sm btn-edit' 
+                                        data-username='{$u['nombreUsuario']}'
+                                        data-nombre='{$u['nombre']}'
+                                        data-apellidos='{$u['apellidos']}'
+                                        data-dni='{$u['dni']}'
+                                        data-correo='{$u['Correo']}'
+                                        data-telefono='{$u['Telefono']}'
+                                        data-fecha='{$u['FechaNac']}'
+                                        data-rol='{$u['Rol']}'>
+                                        Modificar
+                                    </button>
+                                </form>
                             </td>
                             <td>
                                 <form method='post' action=''>
