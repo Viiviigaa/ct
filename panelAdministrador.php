@@ -175,7 +175,7 @@ function actualizarDatosUsuario($nombre, $apellidos, $dni, $correo, $telefono, $
         $telefono, 
         $fecha, 
         $rol,
-        $nombreUsuario
+        $nombreUsuario++
     ]);
     header('Location: ' . $_SERVER['PHP_SELF']);
 }
@@ -219,7 +219,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
     //Modificar o eliminar un usuario
     if(isset($_POST['nombreUsuario'])){
-        if(isset($_POST['accion']) && $_POST['accion']=='Modificar'){
+        if(isset($_POST['accion_update_user'])){
             //Recogemos todos los datos del formulario modal
             $id_original = $_POST['id_original'];
             $nuevo_user  = $_POST['upd_username'];
