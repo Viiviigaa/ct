@@ -440,18 +440,6 @@ function listadoAlojamientosPorAprobar(){
                                 <td>{$a['direccion']}</td>
                                 <td>{$a['max_huespedes']}</td>
                                 <td>{$a['codigoEmpresa']}</td>
-                                <td>
-                                    <form method='get' action=''>
-                                        <input type='hidden' name='alojamientoPendiente' value='Aprobada'>
-                                        <button class='btn btn-success btn-sm'>Publicar</button>
-                                    </form>
-                                </td>
-                                <td>
-                                    <form method='get' action=''>
-                                        <input type='hidden' name='alojamientoPendiente' value='Rechazada'>
-                                        <button class='btn btn-success btn-sm'>Publicar</button>
-                                    </form>
-                                </td>
                             </tr>";
                         }
                         ?>
