@@ -789,7 +789,6 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
             editButtons.forEach(button => {
                 button.addEventListener('click', function () {
                     // Extraer datos del botón
-                    document.getElementById('edit_id_original').value = this.dataset.username;
                     document.getElementById('edit_username').value = this.dataset.username;
                     document.getElementById('edit_username_display').value = this.dataset.username;
                     document.getElementById('edit_nombre').value = this.dataset.nombre;
