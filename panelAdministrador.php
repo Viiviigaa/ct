@@ -227,29 +227,25 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
     }
 
     //Modificar o eliminar un usuario
-    if(isset($_POST['nombreUsuario'])){
-        if(isset($_POST['accion_update_user'])){
-            //Recogemos todos los datos del formulario modal
-            $id_original = $_POST['id_original'];
-            $nuevo_user  = $_POST['upd_username'];
-            $nombre      = $_POST['upd_nombre'];
-            $apellidos   = $_POST['upd_apellidos'];
-            $dni         = $_POST['upd_dni'];
-            $correo      = $_POST['upd_correo'];
-            $telefono    = $_POST['upd_telefono'];
-            $fecha       = $_POST['upd_fecha'];
-            $rol         = $_POST['upd_rol'];
-            try{
-                actualizarDatosUsuario($nombre, $apellidos, $dni, $correo, $telefono, $fecha, $rol, $nuevo_user); 
-            }catch(PDOException $e){
-                echo "Error: " . $e->getMessage();
-            }
-        }else if(isset($_POST['accion']) && $_POST['accion']=='eliminar'){
-            //Eliminamos con nombre de usuario en vez de el ID porque es la primary key de la tabla. 
-            eliminarUsuarios($_POST['nombreUsuario']); 
+    if(isset($_POST['accion_update_user'])){
+        $nombre    = $_POST['upd_nombre'];
+        $apellidos = $_POST['upd_apellidos'];
+        $dni       = $_POST['upd_dni'];
+        $correo    = $_POST['upd_correo'];
+        $telefono  = $_POST['upd_telefono'];
+        $fecha     = $_POST['upd_fecha'];
+        $rol       = $_POST['upd_rol'];
+        try{
+            actualizarDatosUsuario($nombre, $apellidos, $dni, $correo, $telefono, $fecha, $rol, $_POST['nombreUsuario']);
+        }catch(PDOException $e){
+            echo "Error: " . $e->getMessage();
         }
     }
-}
+    if(isset($_POST['accion']) && $_POST['accion']=='eliminar'){
+         //Eliminamos con nombre de usuario en vez de el ID porque es la primary key de la tabla. 
+        eliminarUsuarios($_POST['nombreUsuario']); 
+    }
+    }
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -661,11 +657,11 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
             <form action="" method="POST">
                 <div class="modal-body">
                     <div class="row">
-                        <input type="hidden" name="id_original" id="edit_id_original">
+                        <input type="hidden" name="nombreUsuario" id="edit_username">
                         
                         <div class="col-md-6 mb-3">
                             <label class="form-label">Nombre de Usuario</label>
-                            <input type="text" name="upd_username" id="edit_username" class="form-control" required>
+                            <input type="text" name="upd_username" id="edit_username_display" disabled class="form-control" required>
                         </div>
                         <div class="col-md-6 mb-3">
                             <label class="form-label">Nombre</label>
@@ -799,6 +795,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
                     // Extraer datos del botón
                     document.getElementById('edit_id_original').value = this.dataset.username;
                     document.getElementById('edit_username').value = this.dataset.username;
+                    document.getElementById('edit_username_display').value = this.dataset.username;
                     document.getElementById('edit_nombre').value = this.dataset.nombre;
                     document.getElementById('edit_apellidos').value = this.dataset.apellidos;
                     document.getElementById('edit_dni').value = this.dataset.dni;
