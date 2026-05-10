@@ -35,6 +35,15 @@ function listadoReservasVigentes(){
     return $resultado;
 }
 
+function listadoReservas(){
+    $conn = conectarBD();
+    $query = "SELECT * FROM reservas";
+    $stmt = $conn->prepare($query);
+    $stmt->execute();
+    $resultado = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    return $resultado;
+}
+
 function listadoAlojamientos(){
     $conn = conectarBD();
     $query = "SELECT * FROM alojamientos";
@@ -158,12 +167,16 @@ function listadoAlojamientosPorAprobar(){
             <img src="static/img/logo.png" alt="logo" id="logo">
             <h3 id="textoCabecera" class="mb-0">Canary Travel</h3>
         </a>
-
-        <div class="logs">
-            <button class="btn btn-primary"><a href="empresas.php" style='text-decoration: none; color:white;'>Empresas</a></button>
-            <button class="btn btn-primary"><a href="sesion.php" style='text-decoration: none; color:white;'>Iniciar sesión</a></button>
-            <button class="btn btn-primary"><a href="registro.php" style='text-decoration: none; color:white;'>Registrarse</a></button>
-        </div>
+        
+        <?php
+        if (!isset($_SESSION['usuario'])) {
+            echo "<div class='logs'>
+                <a href='empresas.php' class='btn btn-primary'>Empresas</a>
+                <a href='sesion.php' class='btn btn-primary'>Iniciar sesión</a>
+                <a href='registro.php' class='btn btn-primary'>Registrarse</a>
+            </div>";
+        }
+        ?>
     </header>
     <div class="container mt-5">
         <div id="sec-recomendaciones" class="admin-section">
@@ -217,56 +230,58 @@ function listadoAlojamientosPorAprobar(){
     <div class="container mt-5">
         <div id="sec-recomendaciones" class="admin-section">
             <h3 class="section-title">Moderación de alojamientos</h3>
-            <table class="table align-middle">
-                <thead class="table-light">
-                    <tr>
-                        <th>ID</th>
-                        <th>Nombre del alojamiento</th>
-                        <th>Isla</th>
-                        <th>Descripción</th>
-                        <th>Fotos</th>
-                        <th>Precio</th>
-                        <th>Dirección</th>
-                        <th>Cantidad máxima de huéspedes</th>
-                        <th>Código de empresa</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php
-                    $alojamientos = listadoAlojamientosPorAprobar();
-                    if(!empty($alojamientos)){
-                        foreach ($alojamientos as $a) {
-                            echo "
-                            <tr>
-                                <td>{$a['ID']}</td>
-                                <td>{$a['nombreAlojamiento']}</td>
-                                <td>{$a['Isla']}</td>
-                                <td>{$a['descripcion']}</td>
-                                <td>{$a['fotos']}</td>
-                                <td>{$a['precio']}</td>
-                                <td>{$a['direccion']}</td>
-                                <td>{$a['max_huespedes']}</td>
-                                <td>{$a['codigoEmpresa']}</td>
-                                <td>
-                                    <form method='get' action=''>
-                                        <input type='hidden' name='alojamientoPendiente' value='Aprobada'>
-                                        <button class='btn btn-success btn-sm'>Publicar</button>
-                                    </form>
-                                </td>
-                                <td>
-                                    <form method='get' action=''>
-                                        <input type='hidden' name='alojamientoPendiente' value='Rechazada'>
-                                        <button class='btn btn-success btn-sm'>Publicar</button>
-                                    </form>
-                                </td>
-                            </tr>";
+            <div class="table-responsive">
+                <table class="table align-middle">
+                    <thead class="table-light">
+                        <tr>
+                            <th>ID</th>
+                            <th>Nombre del alojamiento</th>
+                            <th>Isla</th>
+                            <th>Descripción</th>
+                            <th>Fotos</th>
+                            <th>Precio</th>
+                            <th>Dirección</th>
+                            <th>Cantidad máxima de huéspedes</th>
+                            <th>Código de empresa</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php
+                        $alojamientos = listadoAlojamientosPorAprobar();
+                        if(!empty($alojamientos)){
+                            foreach ($alojamientos as $a) {
+                                echo "
+                                <tr>
+                                    <td>{$a['ID']}</td>
+                                    <td>{$a['nombreAlojamiento']}</td>
+                                    <td>{$a['Isla']}</td>
+                                    <td>{$a['descripcion']}</td>
+                                    <td>{$a['fotos']}</td>
+                                    <td>{$a['precio']}</td>
+                                    <td>{$a['direccion']}</td>
+                                    <td>{$a['max_huespedes']}</td>
+                                    <td>{$a['codigoEmpresa']}</td>
+                                    <td>
+                                        <form method='get' action=''>
+                                            <input type='hidden' name='alojamientoPendiente' value='Aprobada'>
+                                            <button class='btn btn-success btn-sm'>Publicar</button>
+                                        </form>
+                                    </td>
+                                    <td>
+                                        <form method='get' action=''>
+                                            <input type='hidden' name='alojamientoPendiente' value='Rechazada'>
+                                            <button class='btn btn-success btn-sm'>Publicar</button>
+                                        </form>
+                                    </td>
+                                </tr>";
+                            }
+                        }else{
+                            echo "<h3>No hay alojamientos pendientes por aprobar</h3>";
                         }
-                    }else{
-                        echo "<h3>No hay alojamientos pendientes por aprobar</h3>";
-                    }
-                    ?>
-                </tbody>
-            </table>
+                        ?>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
     <div class="container mt-5">
@@ -354,36 +369,36 @@ function listadoAlojamientosPorAprobar(){
     <div class="container mt-5">
         <div id="sec-recomendaciones" class="admin-section">
             <h3 class="section-title">Reservas de alojamientos sin restricción de fecha</h3>
-            <table class="table align-middle">
-                <thead class="table-light">
-                    <tr>
-                        <th>ID Reserva</th>
-                        <th>ID Alojamiento</th>
-                        <th>Fecha de inicio</th>
-                        <th>Fecha final</th>
-                        <th>Cantidad de huéspedes</th>
-                        <th>DNI</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php
-                    $reservas = listadoAlojamientos();
-                    foreach ($reservas as $r) {
-                        echo "
+            <div class="table-responsive">
+                <table class="table align-middle">
+                    <thead class="table-light">
                         <tr>
-                            <td>{$r['ID']}</td>
-                            <td>{$r['nombidAlojamiento']}</td>
-                            <td>{$r['isla']}</td>
-                            <td>{$r['descripcion']}</td>
-                            <td>{$r['fotos']}</td>
-                            <td>{$r['direccion']}</td>
-                            <td>{$r['max_huespedes']}</td>
-                            <td>{$r['codigoEmpresa']}</td>
-                        </tr>";
-                    }
-                    ?>
-                </tbody>
-            </table>
+                            <th>ID Reserva</th>
+                            <th>ID Alojamiento</th>
+                            <th>Fecha de inicio</th>
+                            <th>Fecha final</th>
+                            <th>Cantidad de huéspedes</th>
+                            <th>DNI</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php
+                        $reservas = listadoReservas();
+                        foreach ($reservas as $r) {
+                            echo "
+                            <tr>
+                                <td>{$r['id']}</td>
+                                <td>{$r['idAlojamiento']}</td>
+                                <td>{$r['fechaInicio']}</td>
+                                <td>{$r['fechaFinal']}</td>
+                                <td>{$r['cantidadHuespedes']}</td>
+                                <td>{$r['dniReserva']}</td>
+                            </tr>";
+                        }
+                        ?>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 
