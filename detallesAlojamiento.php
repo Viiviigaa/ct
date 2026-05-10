@@ -55,8 +55,39 @@ ini_set('display_errors', 1);
 
 </style>
 <body>
+    <header>
+        <img src="static/img/lista.png" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample" width="30">
+        <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+            <div class="offcanvas-header">
+                <h5 class="offcanvas-title" id="offcanvasExampleLabel">Menú Lateral</h5>
+                <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Cerrar"></button>
+            </div>
+            <div class="offcanvas-body d-flex flex-column">
+                <ul class="list-group">
+                    <li class="list-group-item"><a href="informacionCuenta.php">Mi cuenta</a></li>
+                    <li class="list-group-item"><a href="misReservas.php">Mis Reservas</a></li>
+                    <li class="list-group-item"><a href="recomendaciones.php">Recomendaciones</a></li>
+                </ul>
+                <ul class="list-group mt-auto">
+                    <li class="list-group-item"><a href="logout.php" style='text-decoration: none; color:black'>Cerrar sesion</a></li>
+                </ul>
+            </div>
+        </div>
+        <a href="index.php" id="menuPrincipial" style="text-decoration:none; color:inherit; display:flex; align-items:center; padding:10px;">
+            <img src="static/img/logo.png" alt="logo" width="50">
+            <h3 class="ms-2">Canary Travel</h3>
+        </a>
+        <?php
+        if (!isset($_SESSION['usuario'])) {
+            echo "<div class='logs'>
+                <a href='empresas.php' class='btn btn-primary'>Empresas</a>
+                <a href='sesion.php' class='btn btn-primary'>Iniciar sesión</a>
+                <a href='registro.php' class='btn btn-primary'>Registrarse</a>
+            </div>";
+        }
+        ?>
+    </header>
     <?php
-
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $nombre = trim($_POST['user'] ?? '');
         $contrasena = trim($_POST['pass'] ?? '');
@@ -88,7 +119,6 @@ ini_set('display_errors', 1);
                         <h1>" . $alojamiento['nombreAlojamiento'] . "</h1>
                         <p class='text-primary small'><i class='bi bi-geo-alt-fill'></i> " . $alojamiento['direccion'] . " - Ubicación excelente - Ver mapa</p>
                     </div> </a>
-                    <button class='btn btn-primary fw-bold'>Reserva tu apartamento</button>
                   </div>";
 
             echo "<div class='row g-2 mb-4' style='height: 450px;'>
