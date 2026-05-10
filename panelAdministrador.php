@@ -116,6 +116,32 @@ function informacionUsuario($nombreUsuario){
     return $resultado;
 }
 
+function actualizarDatosUsuario($nombreUsuario,$nombre, $apellidos, $dni, $correo, $telefono, $fecha, $rol){
+    $conn = conectarBD();
+    $query = "UPDATE usuarios set 
+              nombreUsuario = ?,
+              nombre = ?, 
+              apellidos = ?, 
+              dni = ?, 
+              Correo = ?, 
+              Telefono = ?, 
+              FechaNac = ?, 
+              Rol = ? 
+             WHERE nombreUsuario = ?";
+    $stmt = $conn->prepare($query);
+    $stmt->execute([
+        $nombreUsuario,
+        $nombre,
+        $apellidos, 
+        $dni,
+        $correo, 
+        $telefono, 
+        $fecha, 
+        $rol
+    ]);
+    header('Location: ' . $_SERVER['PHP_SELF']);
+}
+
 if($_SERVER['REQUEST_METHOD'] == 'POST'){
     //APROBAR O DENEGAR UNA NUEVO RECOMENDACIÓN
     if(isset($_POST['recomendacionPendiente']) && isset($_POST['recomendacionPendienteVal'])){
@@ -130,7 +156,17 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
     //Modificar o eliminar un usuario
     if(isset($_POST['nombreUsuario'])){
         if(isset($_POST['accion']) && $_POST['accion']=='Modificar'){
-            $usuario = informacionUsuario($_POST['nombreUsuario']);
+            //Recogemos todos los datos del formulario modal
+            $id_original = $_POST['id_original'];
+            $nuevo_user  = $_POST['upd_username'];
+            $nombre      = $_POST['upd_nombre'];
+            $apellidos   = $_POST['upd_apellidos'];
+            $dni         = $_POST['upd_dni'];
+            $correo      = $_POST['upd_correo'];
+            $telefono    = $_POST['upd_telefono'];
+            $fecha       = $_POST['upd_fecha'];
+            $rol         = $_POST['upd_rol'];
+            actualizarDatosUsuario($nuevo_user, $nombre, $apellidos, $dni, $correo, $telefono, $fecha, $rol); 
         }else if(isset($_POST['accion']) && $_POST['accion']=='eliminar'){
             //Eliminamos con nombre de usuario en vez de el ID porque es la primary key de la tabla. 
             eliminarUsuarios($_POST['nombreUsuario']); 
