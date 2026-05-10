@@ -390,7 +390,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
                                 <form method='post' action=''>
                                     <input type='hidden' value='{$r['id']}' name='recomendacionPendiente'>
                                     <input type='hidden' value='Publicar' name='recomendacionPendienteVal'>
-                                    <button type='button' class='btn btn-success btn-sm'>Publicar</button>
+                                    <button type='submit' class='btn btn-success btn-sm'>Publicar</button>
                                 </form>
                             </td>
                             <td>
@@ -501,7 +501,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
                             <td>{$u['Rol']}</td>
                             <td>
                                 <form action='' method='post'>
-                                    <button type='submit' 
+                                    <button type='button' 
                                         class='btn btn-success btn-sm btn-edit' 
                                         data-username='{$u['nombreUsuario']}'
                                         data-nombre='{$u['nombre']}'
