@@ -104,6 +104,15 @@ function eliminarRecomendacionPendiente($id){
     $stmt->execute([$id]);    
 }
 
+function informacionUsuario($nombreUsuario){
+    $conn = conectarBD();
+    $query = "SELECT * FROM usuario where nombreUsuario = ?";
+    $stmt = $conn->prepare($query);
+    $stmt->execute([$nombreUsuario]);
+    $resultado = $stmt->fetch(PDO::FETCH_ASSOC);
+    return $resultado;
+}
+
 if($_SERVER['REQUEST_METHOD'] == 'POST'){
     //APROBAR O DENEGAR UNA NUEVO RECOMENDACIÓN
     if(isset($_POST['recomendacionPendiente']) && isset($_POST['recomendacionPendienteVal'])){
@@ -120,7 +129,8 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 if($_SERVER['REQUEST_METHOD'] == 'GET'){
     if(isset($_GET['nombreUsuario'])){
         if(isset($_GET['accion']) && $_GET['accion']=='Modificar'){
-            //Aquí iría la funcion que permite desplegar los valores qe tiene el formulario y que sean editados
+            $usuario = informacionUsuario($_GET['nombreUsuario']);
+
         }else if(isset($_GET['accion']) && $_GET['accion']=='eliminar'){
             //Eliminamos con nombre de usuario en vez de el ID porque es la primary key de la tabla. 
             eliminarUsuarios($_GET['nombreUsuario']); 
@@ -387,11 +397,18 @@ if($_SERVER['REQUEST_METHOD'] == 'GET'){
                             <td>{$u['FechaNac']}</td>
                             <td>{$u['Rol']}</td>
                             <td>
-                                <form method='get' action=''>
-                                    <input type='hidden' name='nombreUsuario' value='{$u['nombreUsuario']}'>
-                                    <input type='hidden' name='accion' value='modificar'>
-                                    <button type='submit' class='btn btn-success btn-sm'>Modificar</button>
-                                </form>
+                                <button type='button' 
+                                    class='btn btn-success btn-sm btn-edit' 
+                                    data-username='{$u['nombreUsuario']}'
+                                    data-nombre='{$u['nombre']}'
+                                    data-apellidos='{$u['apellidos']}'
+                                    data-dni='{$u['dni']}'
+                                    data-correo='{$u['Correo']}'
+                                    data-telefono='{$u['Telefono']}'
+                                    data-fecha='{$u['FechaNac']}'
+                                    data-rol='{$u['Rol']}'>
+                                    Modificar
+                                </button>
                             </td>
                             <td>
                                 <form method='get' action=''>
@@ -521,5 +538,88 @@ if($_SERVER['REQUEST_METHOD'] == 'GET'){
             </div>
         </div>
     </div>
+
+    <div class="modal fade" id="modalEditarUsuario" tabindex="-1" aria-labelledby="modalEditarUsuarioLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalEditarUsuarioLabel">Modificar Datos de Usuario</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form action="" method="POST">
+                <div class="modal-body">
+                    <div class="row">
+                        <input type="hidden" name="id_original" id="edit_id_original">
+                        
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Nombre de Usuario</label>
+                            <input type="text" name="upd_username" id="edit_username" class="form-control" required>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Nombre</label>
+                            <input type="text" name="upd_nombre" id="edit_nombre" class="form-control">
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Apellidos</label>
+                            <input type="text" name="upd_apellidos" id="edit_apellidos" class="form-control">
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">DNI</label>
+                            <input type="text" name="upd_dni" id="edit_dni" class="form-control">
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Correo</label>
+                            <input type="email" name="upd_correo" id="edit_correo" class="form-control">
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Teléfono</label>
+                            <input type="text" name="upd_telefono" id="edit_telefono" class="form-control">
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Fecha Nacimiento</label>
+                            <input type="date" name="upd_fecha" id="edit_fecha" class="form-control">
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Rol</label>
+                            <select name="upd_rol" id="edit_rol" class="form-select">
+                                <option value="usuario">Usuario</option>
+                                <option value="business">Business</option>
+                                <option value="administrador">Administrador</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="submit" name="accion_update_user" class="btn btn-primary">Guardar Cambios</button>
+                </div>
+            </form>
+            </div>
+        </div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const editButtons = document.querySelectorAll('.btn-edit');
+            const editModal = new bootstrap.Modal(document.getElementById('modalEditarUsuario'));
+
+            editButtons.forEach(button => {
+                button.addEventListener('click', function () {
+                    // Extraer datos del botón
+                    document.getElementById('edit_id_original').value = this.dataset.username;
+                    document.getElementById('edit_username').value = this.dataset.username;
+                    document.getElementById('edit_nombre').value = this.dataset.nombre;
+                    document.getElementById('edit_apellidos').value = this.dataset.apellidos;
+                    document.getElementById('edit_dni').value = this.dataset.dni;
+                    document.getElementById('edit_correo').value = this.dataset.correo;
+                    document.getElementById('edit_telefono').value = this.dataset.telefono;
+                    document.getElementById('edit_fecha').value = this.dataset.fecha;
+                    document.getElementById('edit_rol').value = this.dataset.rol;
+
+                    // Mostrar el modal
+                    editModal.show();
+                });
+            });
+        });
+    </script>
 </body>
 </html>
