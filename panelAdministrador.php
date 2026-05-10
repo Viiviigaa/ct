@@ -91,20 +91,41 @@ function insertarRecomendacion($titulo, $desc, $img,$precio, $lugar, $tipoAct){
 function recomendacionPendienteAInsertar($id){
     $conn = conectarBD();
     $query = "Select * from recomendacionesPendientes where id = ?"; 
-    
+    $stmt = $conn->prepare($query);
+    $stmt->execute([$id]);
+    $resultado = $stmt->fetch(PDO::FETCH_ASSOC);
+    return $resultado;
+}
+
+function eliminarRecomendacionPendiente($id){
+    $conn = conectarBD();
+    $query = "DELETE FROM recomendacionesPendientes where id = ?";
+    $stmt = $conn->prepare($query);
+    $stmt->execute([$id]);    
 }
 
 if($_SERVER['REQUEST_METHOD'] == 'POST'){
-
     //APROBAR O DENEGAR UNA NUEVO RECOMENDACIÓN
     if(isset($_POST['recomendacionPendiente']) && isset($_POST['recomendacionPendienteVal'])){
         if($_POST['recomendacionPendienteVal'] == 'Publicar'){
-            //Aquí haría falta insertar en la tabla de las recomendaciones y eliminarlo de la de recomendacionesPendientes
+            $recom = recomendacionPendienteAInsertar($_POST['recomendacionPendiente']);
+            insertarRecomendacion($recom['titulo'],$recom['descripcion'], $recom['imagen'], $recom['precio'], $recom['lugar'], $recom['tipoActividad']);
+            eliminarRecomendacionPendiente($_POST['recomendacionPendiente']);
         }else{
-            //Aquí solo lo eliminamos de las recomendaciones pendientes
+            eliminarRecomendacionPendiente($_POST['recomendacionPendiente']);
         }
     }
+}
 
+if($_SERVER['REQUEST_METHOD'] == 'GET'){
+    if(isset($_GET['nombreUsuario'])){
+        if(isset($_GET['accion']) && $_GET['accion']=='Modificar'){
+            //Aquí iría la funcion que permite desplegar los valores qe tiene el formulario y que sean editados
+        }else if(isset($_GET['accion']) && $_GET['accion']=='Eliminar'){
+            //Eliminamos con nombre de usuario en vez de el ID porque es la primary key de la tabla. 
+            eliminarUsuarios($_GET['nombreUsuario']); 
+        }
+    }
 }
 
 ?>
@@ -256,14 +277,14 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
                                 <form method='post' action=''>
                                     <input type='hidden' value='{$r['id']}' name='recomendacionPendiente'>
                                     <input type='hidden' value='Publicar' name='recomendacionPendienteVal'>
-                                    <button class='btn btn-success btn-sm'>Publicar</button>
+                                    <button type='submit' class='btn btn-success btn-sm'>Publicar</button>
                                 </form>
                             </td>
                             <td>
                                 <form method='post' action=''>
                                     <input type='hidden' value='{$r['id']}' name='recomendacionPendiente'>
                                     <input type='hidden' value='Rechazada' name='recomendacionPendienteVal'>
-                                    <button class='btn btn-success btn-sm'>Rechazar</button>
+                                    <button type='submit' class='btn btn-success btn-sm'>Rechazar</button>
                                 </form>
                             </td>
                         </tr>";
@@ -314,14 +335,14 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
                                     <form method='get' action=''>
                                     <input type='hidden' value='{$a['ID']}' name='alojamientoID'>
                                         <input type='hidden' name='alojamientoPendiente' value='Aprobada'>
-                                        <button class='btn btn-success btn-sm'>Publicar</button>
+                                        <button type='submit' class='btn btn-success btn-sm'>Publicar</button>
                                     </form>
                                 </td>
                                 <td>
                                     <form method='get' action=''>
                                         <input type='hidden' value='{$a['ID']}' name='alojamientoID'>
                                         <input type='hidden' name='alojamientoPendiente' value='Rechazada'>
-                                        <button class='btn btn-success btn-sm'>Publicar</button>
+                                        <button type='submit' class='btn btn-success btn-sm'>Publicar</button>
                                     </form>
                                 </td>
                             </tr>";
@@ -366,15 +387,17 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
                             <td>{$u['FechaNac']}</td>
                             <td>{$u['Rol']}</td>
                             <td>
-                                <form method='post' action='procesarRecomendacion.php'>
-                                    <input type='hidden' value='{$u['nombreUsuario']}'>
-                                    <button class='btn btn-success btn-sm'>Modificar</button>
+                                <form method='get' action=''>
+                                    <input type='hidden' name='nombreUsuario' value='{$u['nombreUsuario']}'>
+                                    <input type='hidden' name='accion' value='modificar'>
+                                    <button type='submit' class='btn btn-success btn-sm'>Modificar</button>
                                 </form>
                             </td>
                             <td>
-                                <form method='post' action='procesarRecomendacion.php'>
-                                    <input type='hidden' value='{$u['nombreUsuario']}'>
-                                    <button class='btn btn-success btn-sm'>Eliminar</button>
+                                <form method='get' action=''>
+                                    <input type='hidden' name='nombreUsuario' value='{$u['nombreUsuario']}'>
+                                    <input type='hidden' name='accion' value='eliminar'>
+                                    <button type='submit' class='btn btn-success btn-sm'>Eliminar</button>
                                 </form>
                             </td>
                         </tr>";
