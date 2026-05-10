@@ -707,6 +707,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
                     <button type="submit" name="accion_update_user" class="btn btn-primary">Guardar Cambios</button>
                 </div>
+            </form>
             </div>
         </div>
     </div>
