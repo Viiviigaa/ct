@@ -390,7 +390,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
                                 <form method='post' action=''>
                                     <input type='hidden' value='{$r['id']}' name='recomendacionPendiente'>
                                     <input type='hidden' value='Publicar' name='recomendacionPendienteVal'>
-                                    <button type='submit' class='btn btn-success btn-sm'>Publicar</button>
+                                    <button type='button' class='btn btn-success btn-sm'>Publicar</button>
                                 </form>
                             </td>
                             <td>
