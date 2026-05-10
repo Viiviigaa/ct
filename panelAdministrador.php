@@ -117,10 +117,9 @@ function informacionUsuario($nombreUsuario){
     return $resultado;
 }
 
-function actualizarDatosUsuario($nombreUsuario,$nombre, $apellidos, $dni, $correo, $telefono, $fecha, $rol){
+function actualizarDatosUsuario($nombre, $apellidos, $dni, $correo, $telefono, $fecha, $rol, $nombreUsuario){
     $conn = conectarBD();
     $query = "UPDATE usuarios set 
-              nombreUsuario = ?,
               nombre = ?, 
               apellidos = ?, 
               dni = ?, 
@@ -138,7 +137,8 @@ function actualizarDatosUsuario($nombreUsuario,$nombre, $apellidos, $dni, $corre
         $correo, 
         $telefono, 
         $fecha, 
-        $rol
+        $rol,
+        $nombreUsuario
     ]);
     header('Location: ' . $_SERVER['PHP_SELF']);
 }
@@ -176,7 +176,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
             $fecha       = $_POST['upd_fecha'];
             $rol         = $_POST['upd_rol'];
             try{
-                actualizarDatosUsuario($nuevo_user, $nombre, $apellidos, $dni, $correo, $telefono, $fecha, $rol); 
+                actualizarDatosUsuario($nombre, $apellidos, $dni, $correo, $telefono, $fecha, $rol, $nuevo_user); 
             }catch(PDOException $e){
                 echo "Error: " . $e->getMessage();
             }
