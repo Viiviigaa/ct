@@ -6,7 +6,7 @@ session_start();
 function insertarRecomendacion($titulo, $desc, $img,$precio, $lugar, $tipoAct){
     try{
         $conn = conectarBD();
-        $query = "INSERT into recomendaciones (titulo, descripcion, imagen, precio, lugar, tipoActividad) values (?,?,?,?,?,?)";
+        $query = "INSERT into recomendacionesPendientes (titulo, descripcion, imagen, precio, lugar, tipoActividad) values (?,?,?,?,?,?)";
         $stmt = $conn->prepare($query); 
         $resultado = $stmt->execute([
             $titulo,

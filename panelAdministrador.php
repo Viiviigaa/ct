@@ -62,6 +62,50 @@ function listadoAlojamientosPorAprobar(){
     return $resultado;
 }
 
+function eliminarUsuarios($id){
+    $conn = conectarBD();
+    $query = "DELETE FROM USUARIOS WHERE ID = ?";
+    $stmt = $conn->prepare($query);
+    $stmt->execute([$id]);
+}
+
+function insertarRecomendacion($titulo, $desc, $img,$precio, $lugar, $tipoAct){
+    try{
+        $conn = conectarBD();
+        $query = "INSERT into recomendaciones (titulo, descripcion, imagen, precio, lugar, tipoActividad) values (?,?,?,?,?,?)";
+        $stmt = $conn->prepare($query); 
+        $resultado = $stmt->execute([
+            $titulo,
+            $desc,
+            $img, 
+            $precio,
+            $lugar,
+            $tipoAct
+        ]);
+        return $resultado;
+    }catch(PDOException $e){
+        echo $e->getMessage();
+    }
+}
+
+function recomendacionPendienteAInsertar($id){
+    $conn = conectarBD();
+    $query = "Select * from recomendacionesPendientes where id = ?"; 
+    
+}
+
+if($_SERVER['REQUEST_METHOD'] == 'POST'){
+
+    //APROBAR O DENEGAR UNA NUEVO RECOMENDACIÓN
+    if(isset($_POST['recomendacionPendiente']) && isset($_POST['recomendacionPendienteVal'])){
+        if($_POST['recomendacionPendienteVal'] == 'Publicar'){
+            //Aquí haría falta insertar en la tabla de las recomendaciones y eliminarlo de la de recomendacionesPendientes
+        }else{
+            //Aquí solo lo eliminamos de las recomendaciones pendientes
+        }
+    }
+
+}
 
 ?>
 <!DOCTYPE html>
@@ -187,6 +231,7 @@ function listadoAlojamientosPorAprobar(){
                         echo "<table class='table align-middle'>
                             <thead class='table-light'>
                                 <tr>
+                                    <th>ID</th>
                                     <th>Titulo</th>
                                     <th>Descripcion</th>
                                     <th>Imagen</th>
@@ -200,6 +245,7 @@ function listadoAlojamientosPorAprobar(){
                         foreach ($recommend as $r) {
                         echo "
                         <tr>
+                            <td>{$r['id']}</td>
                             <td>{$r['titulo']}</td>
                             <td>{$r['descripcion']}</td>
                             <td>{$r['imagen']}</td>
@@ -208,14 +254,16 @@ function listadoAlojamientosPorAprobar(){
                             <td>{$r['tipoActividad']}</td>
                             <td>
                                 <form method='post' action=''>
-                                    <input type='hidden' name='recomendacionPendiente' value='Aprobada'>
+                                    <input type='hidden' value='{$r['id']}' name='recomendacionPendiente'>
+                                    <input type='hidden' value='Publicar' name='recomendacionPendienteVal'>
                                     <button class='btn btn-success btn-sm'>Publicar</button>
                                 </form>
                             </td>
                             <td>
                                 <form method='post' action=''>
-                                    <input type='hidden' name='recomendacionPendiente' value='Rechazada'>
-                                    <button class='btn btn-success btn-sm'>Publicar</button>
+                                    <input type='hidden' value='{$r['id']}' name='recomendacionPendiente'>
+                                    <input type='hidden' value='Rechazada' name='recomendacionPendienteVal'>
+                                    <button class='btn btn-success btn-sm'>Rechazar</button>
                                 </form>
                             </td>
                         </tr>";
@@ -264,12 +312,14 @@ function listadoAlojamientosPorAprobar(){
                                 <td>{$a['codigoEmpresa']}</td>
                                 <td>
                                     <form method='get' action=''>
+                                    <input type='hidden' value='{$a['ID']}' name='alojamientoID'>
                                         <input type='hidden' name='alojamientoPendiente' value='Aprobada'>
                                         <button class='btn btn-success btn-sm'>Publicar</button>
                                     </form>
                                 </td>
                                 <td>
                                     <form method='get' action=''>
+                                        <input type='hidden' value='{$a['ID']}' name='alojamientoID'>
                                         <input type='hidden' name='alojamientoPendiente' value='Rechazada'>
                                         <button class='btn btn-success btn-sm'>Publicar</button>
                                     </form>
