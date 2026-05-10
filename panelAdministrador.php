@@ -617,7 +617,8 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
                         <div class="col-md-6 mb-3">
                             <label class="form-label">Rol</label>
                             <select name="upd_rol" id="edit_rol" class="form-select">
-                                <option value="usuario">Usuario</option>
+                                <option value="base">Base</option>
+                                <option value="pro">Pro</option>
                                 <option value="business">Business</option>
                                 <option value="administrador">Administrador</option>
                             </select>
