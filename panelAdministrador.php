@@ -181,21 +181,22 @@ function listadoAlojamientosPorAprobar(){
     <div class="container mt-5">
         <div id="sec-recomendaciones" class="admin-section">
             <h3 class="section-title">Moderación de Recomendaciones</h3>
-            <table class="table align-middle">
-                <thead class="table-light">
-                    <tr>
-                        <th>Titulo</th>
-                        <th>Descripcion</th>
-                        <th>Imagen</th>
-                        <th>Precio</th>
-                        <th>Lugar</th>
-                        <th>Tipo de actividad</th>
-                    </tr>
-                </thead>
-                <tbody>
                     <?php
                     $recommend = recomendacionesPorAprobar();
                     if(!empty($recommend)){
+                        echo "<table class='table align-middle'>
+                            <thead class='table-light'>
+                                <tr>
+                                    <th>Titulo</th>
+                                    <th>Descripcion</th>
+                                    <th>Imagen</th>
+                                    <th>Precio</th>
+                                    <th>Lugar</th>
+                                    <th>Tipo de actividad</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                        ";
                         foreach ($recommend as $r) {
                         echo "
                         <tr>
@@ -230,51 +231,51 @@ function listadoAlojamientosPorAprobar(){
     <div class="container mt-5">
         <div id="sec-recomendaciones" class="admin-section">
             <h3 class="section-title">Moderación de alojamientos</h3>
-            <div class="table-responsive">
-                <table class="table align-middle">
-                    <thead class="table-light">
-                        <tr>
-                            <th>ID</th>
-                            <th>Nombre del alojamiento</th>
-                            <th>Isla</th>
-                            <th>Descripción</th>
-                            <th>Fotos</th>
-                            <th>Precio</th>
-                            <th>Dirección</th>
-                            <th>Cantidad máxima de huéspedes</th>
-                            <th>Código de empresa</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php
-                        $alojamientos = listadoAlojamientosPorAprobar();
-                        if(!empty($alojamientos)){
-                            foreach ($alojamientos as $a) {
-                                echo "
-                                <tr>
-                                    <td>{$a['ID']}</td>
-                                    <td>{$a['nombreAlojamiento']}</td>
-                                    <td>{$a['Isla']}</td>
-                                    <td>{$a['descripcion']}</td>
-                                    <td>{$a['fotos']}</td>
-                                    <td>{$a['precio']}</td>
-                                    <td>{$a['direccion']}</td>
-                                    <td>{$a['max_huespedes']}</td>
-                                    <td>{$a['codigoEmpresa']}</td>
-                                    <td>
-                                        <form method='get' action=''>
-                                            <input type='hidden' name='alojamientoPendiente' value='Aprobada'>
-                                            <button class='btn btn-success btn-sm'>Publicar</button>
-                                        </form>
-                                    </td>
-                                    <td>
-                                        <form method='get' action=''>
-                                            <input type='hidden' name='alojamientoPendiente' value='Rechazada'>
-                                            <button class='btn btn-success btn-sm'>Publicar</button>
-                                        </form>
-                                    </td>
-                                </tr>";
-                            }
+                <?php
+                    $alojamientos = listadoAlojamientosPorAprobar();
+                    if(!empty($alojamientos)){
+                        echo "<div class='table-responsive'>
+                            <table class='table align-middle'>
+                                <thead class='table-light'>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Nombre del alojamiento</th>
+                                        <th>Isla</th>
+                                        <th>Descripción</th>
+                                        <th>Fotos</th>
+                                        <th>Precio</th>
+                                        <th>Dirección</th>
+                                        <th>Cantidad máxima de huéspedes</th>
+                                        <th>Código de empresa</th>
+                                    </tr>
+                            </thead>
+                        <tbody>";
+                        foreach ($alojamientos as $a) {
+                            echo "
+                            <tr>
+                                <td>{$a['ID']}</td>
+                                <td>{$a['nombreAlojamiento']}</td>
+                                <td>{$a['Isla']}</td>
+                                <td>{$a['descripcion']}</td>
+                                <td>{$a['fotos']}</td>
+                                <td>{$a['precio']}</td>
+                                <td>{$a['direccion']}</td>
+                                <td>{$a['max_huespedes']}</td>
+                                <td>{$a['codigoEmpresa']}</td>
+                                <td>
+                                    <form method='get' action=''>
+                                        <input type='hidden' name='alojamientoPendiente' value='Aprobada'>
+                                        <button class='btn btn-success btn-sm'>Publicar</button>
+                                    </form>
+                                </td>
+                                <td>
+                                    <form method='get' action=''>
+                                        <input type='hidden' name='alojamientoPendiente' value='Rechazada'>
+                                        <button class='btn btn-success btn-sm'>Publicar</button>
+                                    </form>
+                                </td>
+                            </tr>";
+                        }
                         }else{
                             echo "<h3>No hay alojamientos pendientes por aprobar</h3>";
                         }
