@@ -326,7 +326,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
                             <td>{$r['id']}</td>
                             <td>{$r['titulo']}</td>
                             <td>{$r['descripcion']}</td>
-                            <td style='overflow-x: auto; max-width: 100px'>{$r['imagen']}</td>
+                            <td style='overflow-x: auto; max-width: 100px'><a href='{$r['imagen']}>Ver imagen</a></td>
                             <td>{$r['precio']}</td>
                             <td>{$r['lugar']}</td>
                             <td>{$r['tipoActividad']}</td>
@@ -572,7 +572,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
                                 <td>{$a['nombreAlojamiento']}</td>
                                 <td>{$a['isla']}</td>
                                 <td>{$a['descripcion']}</td>
-                                <td>{$a['fotos']}</td>
+                                <td style='overflow-x: auto; max-width: 100px'>{$a['fotos']}</td>
                                 <td>{$a['precio']}</td>
                                 <td>{$a['direccion']}</td>
                                 <td>{$a['max_huespedes']}</td>
