@@ -250,7 +250,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
     //Dar de alta un nuevo alojamiento
     if(isset($_POST['alta_aloj'])){
-        $nombreAlojamiento = $_POST['nombreAloj'];
+        $nombreAlojamiento = $_POST['nombre_aloj'];
         $isla = $_POST['isla_aloj'];
         $descrip = $_POST['descripcion_aloj'];
         $imagen = $_POST['imagen'];
@@ -260,7 +260,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
         $empresa = $_POST['empresa_aloj'];
         nuevoAlojamiento($nombreAlojamiento, $isla, $descrip, $imagen, $precio, $direccion, $huespedes, $empresa);
     }
-    
+
     }
 ?>
 <!DOCTYPE html>
