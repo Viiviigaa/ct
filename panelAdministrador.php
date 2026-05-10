@@ -708,11 +708,11 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
                     <button type="submit" name="accion_update_user" class="btn btn-primary">Guardar Cambios</button>
                 </div>
 
-        <div class="modal fade" id="darAltaAlojamiento" tabindex="-1" aria-labelledby="modalEditarUsuarioLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
+    <div class="modal fade" id="darAltaAlojamiento" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="insertarAlojamienti">Añadir nuevo alojamiento</h5>
+                <h5 class="modal-title">Añadir nuevo alojamiento</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <form action="" method="POST">
@@ -720,7 +720,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
                     <div class="row">                
                         <div class="col-md-6 mb-3">
                             <label class="form-label">Nombre del alojamiento</label>
-                            <input type="text" name="nombre_aloj" id="edit_username" class="form-control" required>
+                            <input type="text" name="nombre_aloj" id="alta_nombre_aloj" class="form-control" required>
                         </div>
                         <div class="col-md-6 mb-3">
                             <label class="form-label">Isla</label>
@@ -728,46 +728,46 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
                                 <?php
                                     $destinos = listarDestinos();
                                     foreach($destinos as $d){
-                                        echo "<option value='{$r['nombre']}'>{$r['nombre']}</option>";
+                                        echo "<option value='".htmlspecialchars($d['nombre'])."'>".htmlspecialchars($d['nombre'])."</option>";
                                     }
                                 ?>
                             </select>
                         </div>
                         <div class="col-md-6 mb-3">
-                            <label class="form-label">Descripcion</label>
+                            <label class="form-label">Descripción</label>
                             <input type="text" name="descripcion_aloj" class="form-control">
                         </div>
                         <div class="col-md-6 mb-3">
-                            <label class="form-label">DNI</label>
-                            <input type="text" name="dni_aloj"  class="form-control">
+                            <label class="form-label">DNI Propietario</label>
+                            <input type="text" name="dni_aloj" class="form-control">
                         </div>
                         <div class="col-md-6 mb-3">
-                            <label class="form-label">Fotos</label>
-                            <input type="text" name="fotos-aloj"  class="form-control">
+                            <label class="form-label">URL Fotos</label>
+                            <input type="text" name="fotos-aloj" class="form-control">
                         </div>
                         <div class="col-md-6 mb-3">
                             <label class="form-label">Precio</label>
-                            <input type="email" name="precio_aloj"  class="form-control">
+                            <input type="number" name="precio_aloj" class="form-control">
                         </div>
                         <div class="col-md-6 mb-3">
                             <label class="form-label">Dirección</label>
-                            <input type="text" name="direccion_aloj"  class="form-control">
+                            <input type="text" name="direccion_aloj" class="form-control">
                         </div>
                         <div class="col-md-6 mb-3">
-                            <label class="form-label">Cantidad máxima de huéspedes</label>
-                            <input type="date" name="huespedes_aloj"  class="form-control">
+                            <label class="form-label">Máx. Huéspedes</label>
+                            <input type="number" name="huespedes_aloj" class="form-control">
                         </div>
                         <div class="col-md-6 mb-3">
                             <label class="form-label">Código de empresa</label>
-                            <input type="date" name="empresa_aloj"  class="form-control">
+                            <input type="text" name="empresa_aloj" class="form-control">
                         </div>
                     </div>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                    <button type="submit" name="alta_aloj" class="btn btn-primary">Guardar Cambios</button>
-                </div>
-            </form>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="submit" name="alta_aloj" class="btn btn-primary">Guardar Alojamiento</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
@@ -784,7 +784,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
                 altaModal.show();
                 });
             }
-            
+
             editButtons.forEach(button => {
                 button.addEventListener('click', function () {
                     // Extraer datos del botón
