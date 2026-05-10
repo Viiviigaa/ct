@@ -241,10 +241,26 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
             echo "Error: " . $e->getMessage();
         }
     }
+
+
     if(isset($_POST['accion']) && $_POST['accion']=='eliminar'){
          //Eliminamos con nombre de usuario en vez de el ID porque es la primary key de la tabla. 
         eliminarUsuarios($_POST['nombreUsuario']); 
     }
+
+    //Dar de alta un nuevo alojamiento
+    if(isset($_POST['alta_aloj'])){
+        $nombreAlojamiento = $_POST['nombreAloj'];
+        $isla = $_POST['isla_aloj'];
+        $descrip = $_POST['descripcion_aloj'];
+        $imagen = $_POST['imagen'];
+        $precio = $_POST['precio_aloj'];
+        $direccion = $_POST['direccion_aloj'];
+        $huespedes = $_POST['huespedes_aloj'];
+        $empresa = $_POST['empresa_aloj'];
+        nuevoAlojamiento($nombreAlojamiento, $isla, $descrip, $imagen, $precio, $direccion, $huespedes, $empresa);
+    }
+    
     }
 ?>
 <!DOCTYPE html>
@@ -722,7 +738,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
                         </div>
                         <div class="col-md-6 mb-3">
                             <label class="form-label">Isla</label>
-                            <select class="form-control" name="destino_aloj">
+                            <select class="form-control" name="isla_aloj">
                                 <?php
                                     $destinos = listarDestinos();
                                     foreach($destinos as $d){
