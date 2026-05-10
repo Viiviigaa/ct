@@ -64,7 +64,7 @@ function listadoAlojamientosPorAprobar(){
 
 function eliminarUsuarios($id){
     $conn = conectarBD();
-    $query = "DELETE FROM USUARIOS WHERE ID = ?";
+    $query = "DELETE FROM USUARIOS WHERE nombreUsuario = ?";
     $stmt = $conn->prepare($query);
     $stmt->execute([$id]);
 }
@@ -121,7 +121,7 @@ if($_SERVER['REQUEST_METHOD'] == 'GET'){
     if(isset($_GET['nombreUsuario'])){
         if(isset($_GET['accion']) && $_GET['accion']=='Modificar'){
             //Aquí iría la funcion que permite desplegar los valores qe tiene el formulario y que sean editados
-        }else if(isset($_GET['accion']) && $_GET['accion']=='eliminar'){
+        }else if(isset($_GET['accion']) && $_GET['accion']=='e+liminar'){
             //Eliminamos con nombre de usuario en vez de el ID porque es la primary key de la tabla. 
             eliminarUsuarios($_GET['nombreUsuario']); 
         }
