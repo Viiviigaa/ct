@@ -66,6 +66,44 @@ function listadoAlojamientosPorAprobar(){
     return $resultado;
 }
 
+function informacionAlojamiento($id){
+    $conn = conectarBD();
+    $query = "SELECT * FROM alojamientosPendientes where ID = ?";
+    $stmt = $conn->prepare($query);
+    $stmt->execute([$id]);
+    $resultados = $stmt->fetch(PDO::FETCH_ASSOC);
+    return $resultados; 
+}
+
+function nuevoAlojamiento($nombre, $isla, $descripcion, $fotos, $precio, $huespedes, $direccion, $codigoEmpresa){
+    $conn = conectarBD();
+    try {
+        $query = "INSERT INTO alojamientos (nombreAlojamiento, isla, descripcion, fotos, precio, direccion, max_huespedes, codigoEmpresa) 
+                  VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        $stmt = $conn->prepare($query);
+        $resultado = $stmt->execute([
+            $nombre,
+            $isla,
+            $descripcion,
+            $fotos,
+            $precio,
+            $direccion,
+            $huespedes,
+            $codigoEmpresa
+        ]);
+        return $resultado;
+    } catch (PDOException $e) {
+        echo "Error al insertar: " . $e->getMessage();
+        return false;
+    }
+}
+
+function eliminarAlojamientoPendiente($id){
+    $conn = conectarBD();
+    $query = "DELETE FROM alojamientosPendientes where ID = ?";
+    $stmt = $conn->prepare($query);
+    $stmt->execute([$id]);  
+}
 function eliminarUsuarios($id){
     $conn = conectarBD();
     $query = "DELETE FROM usuarios WHERE nombreUsuario = ?";
@@ -162,6 +200,24 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
             }
         }
     }
+
+    //Publicar o eliminar un alojamiento pendiente
+    if(isset($_POST['alojamientoID']) && $_POST['alojamientoPendiente'] == 'Aprobada'){
+        try{
+            $infoAlojamiento = informacionAlojamiento($_POST['alojamientoID']);
+            nuevoAlojamiento($infoAlojamiento['nombreAlojamiento'],$infoAlojamiento['isla'],$infoAlojamiento['descripcion'],$infoAlojamiento['fotos'], $infoAlojamiento['precio'], $infoAlojamiento['direccion'],$infoAlojamiento['max_huespedes'], $infoAlojamiento['codigoEmpresa']);
+            eliminarAlojamientoPendiente($_POST['alojamientoID']);
+        }catch(PDOException $e){
+            echo "Error: " . $e->getMessage();
+        }
+    }else if(isset($_POST['alojamientoID']) && $_POST['alojamientoPendiente'] == 'Rechazada'){
+        try{
+            eliminarAlojamientoPendiente($_POST['aloajamientoID']);
+        }catch(PDOException $e){
+            echo "Error: " . $e->getMessage();
+        }
+    }
+
     //Modificar o eliminar un usuario
     if(isset($_POST['nombreUsuario'])){
         if(isset($_POST['accion']) && $_POST['accion']=='Modificar'){
@@ -381,7 +437,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
                             <tr>
                                 <td>{$a['ID']}</td>
                                 <td>{$a['nombreAlojamiento']}</td>
-                                <td>{$a['Isla']}</td>
+                                <td>{$a['isla']}</td>
                                 <td>{$a['descripcion']}</td>
                                 <td>{$a['fotos']}</td>
                                 <td>{$a['precio']}</td>
@@ -399,7 +455,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
                                     <form method='get' action=''>
                                         <input type='hidden' value='{$a['ID']}' name='alojamientoID'>
                                         <input type='hidden' name='alojamientoPendiente' value='Rechazada'>
-                                        <button type='submit' class='btn btn-success btn-sm'>Publicar</button>
+                                        <button type='submit' class='btn btn-success btn-sm'>Rechazar</button>
                                     </form>
                                 </td>
                             </tr>";
