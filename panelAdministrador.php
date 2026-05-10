@@ -75,10 +75,10 @@ function informacionAlojamiento($id){
     return $resultados; 
 }
 
-function nuevoAlojamiento($nombre, $isla, $descripcion, $fotos, $precio, $huespedes, $direccion, $codigoEmpresa){
+function nuevoAlojamiento($nombre, $isla, $descripcion, $fotos, $precio, $direccion, $huespedes, $codigoEmpresa){
     $conn = conectarBD();
     try {
-        $query = "INSERT INTO alojamientos (nombreAlojamiento, isla, descripcion, fotos, precio,max_huespedes,direccion, codigoEmpresa) 
+        $query = "INSERT INTO alojamientos (nombreAlojamiento, isla, descripcion, fotos, precio, direccion, max_huespedes, codigoEmpresa) 
                   VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
         $stmt = $conn->prepare($query);
         $resultado = $stmt->execute([
@@ -175,7 +175,7 @@ function actualizarDatosUsuario($nombre, $apellidos, $dni, $correo, $telefono, $
         $telefono, 
         $fecha, 
         $rol,
-        $nombreUsuario++
+        $nombreUsuario
     ]);
     header('Location: ' . $_SERVER['PHP_SELF']);
 }
@@ -220,7 +220,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
         }
     }else if(isset($_POST['alojamientoID']) && $_POST['alojamientoPendiente'] == 'Rechazada'){
         try{
-            eliminarAlojamientoPendiente($_POST['aloajamientoID']);
+            eliminarAlojamientoPendiente($_POST['alojamientoID']);
         }catch(PDOException $e){
             echo "Error: " . $e->getMessage();
         }
@@ -610,7 +610,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
         <div id="sec-alojamientos" class="admin-section">
             <div class="d-flex justify-content-between">
                 <h3 class="section-title">Moderación de alojamientos</h3>
-                <button class="btn btn-outline-primary btn-sm">+ Añadir alojamiento</button>
+                <button id="btnAbrirAlta" class="btn btn-outline-primary btn-sm">+ Añadir alojamiento</button>
             </div>
             <br>
             <div class="table-responsive">
@@ -708,8 +708,8 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
                     <button type="submit" name="accion_update_user" class="btn btn-primary">Guardar Cambios</button>
                 </div>
 
-            <div class="modal fade" id="modalEditarUsuario" tabindex="-1" aria-labelledby="modalEditarUsuarioLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
+        <div class="modal fade" id="darAltaAlojamiento" tabindex="-1" aria-labelledby="modalEditarUsuarioLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="insertarAlojamienti">Añadir nuevo alojamiento</h5>
@@ -776,6 +776,15 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
             const editButtons = document.querySelectorAll('.btn-edit');
             const editModal = new bootstrap.Modal(document.getElementById('modalEditarUsuario'));
 
+            const altaModal =  new bootstrap.Modal(document.getElementById('darAltaAlojamiento'));
+            const btnAbrirAlta = document.getElementById("btnAbrirAlta");
+
+            if(btnAbrirAlta){
+                btnAbrirAlta.addEventListener('click', function() {
+                altaModal.show();
+                });
+            }
+            
             editButtons.forEach(button => {
                 button.addEventListener('click', function () {
                     // Extraer datos del botón
