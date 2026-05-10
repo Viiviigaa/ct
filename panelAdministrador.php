@@ -1,6 +1,9 @@
 <?php
 include 'conectar.php';
 session_start();
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
 if (!isset($_SESSION['rol']) || $_SESSION['rol'] !== 'administrador') {
     header("Location: index.php");
     exit();
@@ -64,7 +67,7 @@ function listadoAlojamientosPorAprobar(){
 
 function eliminarUsuarios($id){
     $conn = conectarBD();
-    $query = "DELETE FROM USUARIOS WHERE nombreUsuario = ?";
+    $query = "DELETE FROM usuarios WHERE nombreUsuario = ?";
     $stmt = $conn->prepare($query);
     $stmt->execute([$id]);
 }
@@ -106,7 +109,7 @@ function eliminarRecomendacionPendiente($id){
 
 function informacionUsuario($nombreUsuario){
     $conn = conectarBD();
-    $query = "SELECT * FROM usuario where nombreUsuario = ?";
+    $query = "SELECT * FROM usuarios where nombreUsuario = ?";
     $stmt = $conn->prepare($query);
     $stmt->execute([$nombreUsuario]);
     $resultado = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -124,22 +127,18 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
             eliminarRecomendacionPendiente($_POST['recomendacionPendiente']);
         }
     }
-}
-
-if($_SERVER['REQUEST_METHOD'] == 'GET'){
-    if(isset($_GET['nombreUsuario'])){
-        if(isset($_GET['accion']) && $_GET['accion']=='Modificar'){
-            $usuario = informacionUsuario($_GET['nombreUsuario']);
-
-        }else if(isset($_GET['accion']) && $_GET['accion']=='eliminar'){
+    //Modificar o eliminar un usuario
+    if(isset($_POST['nombreUsuario'])){
+        if(isset($_POST['accion']) && $_POST['accion']=='Modificar'){
+            $usuario = informacionUsuario($_POST['nombreUsuario']);
+        }else if(isset($_POST['accion']) && $_POST['accion']=='eliminar'){
             //Eliminamos con nombre de usuario en vez de el ID porque es la primary key de la tabla. 
-            eliminarUsuarios($_GET['nombreUsuario']); 
+            eliminarUsuarios($_POST['nombreUsuario']); 
         }
     }
 }
-
 ?>
-<!DOCTYPE html>
+<!DOCTYPE html>+
 <html lang="es">
 
 <head>
@@ -411,7 +410,7 @@ if($_SERVER['REQUEST_METHOD'] == 'GET'){
                                 </button>
                             </td>
                             <td>
-                                <form method='get' action=''>
+                                <form method='post' action=''>
                                     <input type='hidden' name='nombreUsuario' value='{$u['nombreUsuario']}'>
                                     <input type='hidden' name='accion' value='eliminar'>
                                     <button type='submit' class='btn btn-success btn-sm'>Eliminar</button>
