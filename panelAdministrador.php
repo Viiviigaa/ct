@@ -206,6 +206,8 @@ function listadoAlojamientosPorAprobar(){
                             </td>
                         </tr>";
                     }
+                    }else{
+                        echo "<h3>No hay recomendaciones pendientes por aprobar</h3>";
                     }
                     ?>
                 </tbody>
@@ -259,6 +261,8 @@ function listadoAlojamientosPorAprobar(){
                                 </td>
                             </tr>";
                         }
+                    }else{
+                        echo "<h3>No hay alojamientos pendientes por aprobar</h3>";
                     }
                     ?>
                 </tbody>
