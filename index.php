@@ -221,7 +221,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     </script>
                     <div class="col-md-2">
                         <label class="form-label fw-bold">Huéspedes</label>
-                        <input type="number" name="huespedes" value="<?php echo isset($_SESSION['huespedes']) ? (int)$_SESSION['huespedes'] : 1; ?>" class="form-control">
+                        <input type="number" min="1" name="huespedes" value="<?php echo isset($_SESSION['huespedes']) ? (int)$_SESSION['huespedes'] : 1; ?>" class="form-control">
                     </div>
                     <div class="col-md-2">
                         <input class="btn btn-primary w-100" type="submit" value="Buscar">
