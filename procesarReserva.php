@@ -101,7 +101,7 @@
                                 <br>
                                 <button class='btn btn-primary w-100 p-4'><a href='pago.php?id=" . $_GET['id'] . "&huespedes=" . $huespedes . "' class='text-white text-center fs-2 fw-bold' style='text-decoration: none;'>Pagar: {$precioTotal}€</a></button>
                                 <br><br>
-                                <a href='detallesAlojamiento.php?id=" . htmlspecialchars($id_alojamiento) . "&estancia=" . urlencode($estancia) . "&precio=" . urlencode($precioTotal / ($estancia * $huespedes)) . "&huespedes=" . urlencode($huespedes) . "' 
+                                <a href='detallesAlojamiento.php?id=" . htmlspecialchars($id_alojamiento) . "&estancia=" . urlencode($estancia) . "&precio=" . urlencode($precioTotal) . "&huespedes=" . urlencode($huespedes) . "' 
                                     class='d-block text-center text-decoration-none text-black fw-bold'>
                                     Volver a detalles
                                 </a>

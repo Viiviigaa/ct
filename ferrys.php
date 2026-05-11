@@ -114,7 +114,7 @@
                     </div>
                     <div class="col-md-2">
                         <label class="form-label fw-bold">Pasajeros</label>
-                        <input type="number" name="pasajeros" id="vuelta"  class="form-control" value="<?php echo $_POST['pasajeros'] ?? ''; ?>">
+                        <input type="number" min="1" name="pasajeros" id="vuelta"  class="form-control" value="<?php echo $_POST['pasajeros'] ?? ''; ?>">
                     </div>
                     <div class="col-md-1">
                         <label class="form-label fw-bold">Vehículo: </label>
