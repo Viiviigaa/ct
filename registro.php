@@ -61,6 +61,8 @@ ini_set('display_errors', 1);
 
         if (empty($telefono)) {
             $errores["telefono"] = "<h6 style='color:red'>El telefono no puede estar vacio</h6>";
+        }else if(!preg_match('/^[0-9]+$/', $telefono)){
+            $errores["telefono"] = "<h6 style='color:red'>El telefono no puede contener letras</h6>";
         }
         
         if (empty($nombre)) {

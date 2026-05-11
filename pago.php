@@ -16,6 +16,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $errores['numeroTarjeta'] = "El número de tarjeta es obligatorio.";
     } else if (strlen($numeroTarjeta) < 13 || strlen($numeroTarjeta) > 19) {
         $errores['numeroTarjeta'] = "Longitud no válida.";
+    }else if(!preg_match('/^[0-9]+$/', $numeroTarjeta)){
+         $errores['numeroTarjeta'] = "El numero de tarjeta no puede contener letras";
     }
 
     if (empty($fechaTarjeta)) {
@@ -29,6 +31,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     if (empty($cvv) || (strlen($cvv) < 3) || (strlen($cvv) > 4)) {
+        $errores['cvv'] = "CVV no válido.";
+    }else if(!preg_match('/^[0-9]+$/', $cvv)){
         $errores['cvv'] = "CVV no válido.";
     }
 
