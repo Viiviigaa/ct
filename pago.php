@@ -90,9 +90,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <label>Nombre en la tarjeta</label>
             <input type="text" class="form-control" name="nombre">
             <?php if (isset($errores['nombre'])) echo "<small class='text-danger'>{$errores['nombre']}</small>"; ?>
-        </div>
-
+        </div> 
         <button type="submit" class="btn btn-primary btn-block">Confirmar Pago</button>
+        <a href="index.php" style='text-align: center; text-decoration: none'>Volver al menú principal</a>
     </form>
 </div>
 </body>
