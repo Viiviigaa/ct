@@ -16,6 +16,6 @@ if (isset($_SESSION['usuario']) && isset($_GET['plan'])) {
         die("Error al actualizar el plan: " . $e->getMessage());
     }
 } else {
-    header('Location: index.php');
+    header('Location: index.php?error=badAssignment');
     exit;
 }
