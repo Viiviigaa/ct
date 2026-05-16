@@ -5,7 +5,7 @@ session_start();
 include 'conectar.php';
 
 try {
-    $conn = conectarBD('canaryTravel', 'root', 'root');
+    $conn = conectarBD();
     if (!isset($_SESSION['usuario'])) {
         header('Location: index.php');
         exit;
