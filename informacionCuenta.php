@@ -512,7 +512,7 @@ try {
             if(planParam === 'free') planParam = 'base';
 
             if(planParam === 'base'){
-                window.location.href = `actualizar_rol?plan=base`;
+                window.location.href = `actualizar_rol.php?plan=base`;
             }else{
                 window.location.href = `pago.php?type=suscripcion&plan=${planParam}`;
             }
