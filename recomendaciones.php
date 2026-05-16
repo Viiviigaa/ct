@@ -223,8 +223,21 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
                                 </select>
                             </div>
                             <div class='mb-3'>
-                                <label class='form-label'>Lugar</label>
-                                <input type='text' name='lugar' class='form-control' placeholder='Ej: Tenerife' required>
+                                <select name='destinos' class='form-select'>";
+                                    try {
+                                        $conn = conectarBD();
+                                        $stmt = $conn->query('SELECT nombre FROM destinos');
+                                        $destinos = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                                        foreach ($destinos as $d) {
+                                            $selected = (isset($_POST['destinos']) && $_POST['destinos'] == $d['nombre']) ? 'selected' : '';
+                                            echo "<option value='" . htmlspecialchars($d['nombre']) . "' $selected>{$d['nombre']}</option>";
+                                        }
+                                        } catch (PDOException $e) {
+                                            echo "<option>Error de conexión</option>";
+                                        }
+                                    
+                            echo "
+                                </select>
                             </div>
                             <div class='mb-3'>
                                 <label class='form-label'>Precio</label>
