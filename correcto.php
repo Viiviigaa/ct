@@ -9,7 +9,7 @@ ini_set('display_errors', 1);
 
 
 function checkIdReserva($id) {
-    $conn = conectarBD('canaryTravel', 'root', 'root');
+    $conn = conectarBD();
     $sql = "SELECT ID FROM reservas WHERE id = ?";
     $stmt = $conn->prepare($sql);
     $stmt->execute([$id]);
@@ -51,7 +51,7 @@ if (!$usuario) {
 }
 
 try {
-    $conn = conectarBD('canaryTravel', 'root', 'root');
+    $conn = conectarBD();
 
     if ($type === 'suscripcion') {
         $nuevoRol = $_GET['plan'] ?? 'base';
