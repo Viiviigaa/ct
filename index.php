@@ -215,8 +215,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         fechaIni.setAttribute('min', hoy);
                         fechaFin.setAttribute('min', hoy);
                         fechaIni.addEventListener("change", () => {
-                            const seleccionada = fechaIni.value;                 
-                            fechaFin.setAttribute('min', seleccionada);
+                            const seleccionada = fechaIni.value;
+                            const fecha = new Date(seleccionada);
+                            fecha.setDate(fecha.getDate()+1);
+                            const valida = fecha.toISOString().split('T')[0];            
+                            fechaFin.setAttribute('min', valida);
                         })
                     </script>
                     <div class="col-md-2">
