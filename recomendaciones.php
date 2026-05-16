@@ -223,6 +223,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
                                 </select>
                             </div>
                             <div class='mb-3'>
+                                <label class='form-label'>Lugar</label>
                                 <select name='destinos' class='form-select'>";
                                     try {
                                         $conn = conectarBD();
