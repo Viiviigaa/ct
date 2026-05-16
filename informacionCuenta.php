@@ -419,7 +419,7 @@ try {
                             <?php if($rolActual == 'base'): ?>
                                 <button class="plan-btn current" disabled>Plan actual</button>
                             <?php else: ?>
-                                <button class="plan-btn" onclick="openModal('Free Plan', 'gratuito')">Cambiar a Free</button>
+                                <button class="plan-btn" onclick="openModal('free', 'gratuito')">Cambiar a Free</button>
                             <?php endif; ?>
                         </div>
 
@@ -508,6 +508,7 @@ try {
         function confirmPurchase() {
             closeModal();
             let planParam = selectedPlan.toLowerCase().replace('plan ', '');
+            
             if(planParam === 'free') planParam = 'base';
 
             if(planParam === 'base'){
