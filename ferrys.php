@@ -189,11 +189,12 @@
                             </div>
 
                             <div class='col-md-4 d-flex flex-column justify-content-center align-items-center bg-light border-start'>
-                            <h2 class='text-success mb-0'>{$mostrarPrecio}</h2>
-                            <p class='text-muted mb-3'>Total por {$pasajeros} pasajeros</p>
-                            <a href='procesarFerrys.php?origen={$ferry['origen']}&destino={$ferry['destino']}&pasajeros={$pasajeros}&precio={$precioFinal}' class='btn btn-primary btn-lg'>Reservar ahora</a>
+                                <h2 class='text-success mb-0'>{$mostrarPrecio}</h2>
+                                <p class='text-muted mb-3'>Total por {$pasajeros} pasajeros</p>
+                                <a href='procesarFerrys.php?origen={$ferry['origen']}&destino={$ferry['destino']}&pasajeros={$pasajeros}&precio={$precioFinal}' class='btn btn-primary btn-lg'>Reservar ahora</a>
+                            </div>
                         </div>
-                    </div>";
+                        </div>";
                     }
                 }
                 echo "</div>";
