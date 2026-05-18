@@ -44,10 +44,10 @@
         FROM usuarios u
         INNER JOIN reservas r ON u.dni = r.dniReserva
         INNER JOIN alojamientos a ON r.idAlojamiento = a.ID
-        WHERE u.dni = ? and fechaInicio > '$hoy'";
+        WHERE u.dni = ? and r.fechaInicio > '?'";
         
         $stmt = $conn->prepare($query);
-        $stmt->execute([$dni]);
+        $stmt->execute([$dni, $hoy]);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
