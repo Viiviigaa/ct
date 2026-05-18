@@ -38,12 +38,13 @@
     }
 
     function listarReservasAlojamientos($conn, $dni){
+        $hoy = date("Y-m-d");
         $query = "SELECT u.nombreUsuario, u.dni, r.id AS id_reserva,
         r.fechaInicio, r.fechaFinal, a.nombreAlojamiento, a.isla, a.direccion, a.precio AS precio_noche
         FROM usuarios u
         INNER JOIN reservas r ON u.dni = r.dniReserva
         INNER JOIN alojamientos a ON r.idAlojamiento = a.ID
-        WHERE u.dni = ?";
+        WHERE u.dni = ? and fechaInicio > '$hoy'";
         
         $stmt = $conn->prepare($query);
         $stmt->execute([$dni]);
