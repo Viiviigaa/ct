@@ -44,7 +44,7 @@
         FROM usuarios u
         INNER JOIN reservas r ON u.dni = r.dniReserva
         INNER JOIN alojamientos a ON r.idAlojamiento = a.ID
-        WHERE u.dni = ? and r.fechaInicio > '?'";
+        WHERE u.dni = ? and r.fechaInicio > ?";
         
         $stmt = $conn->prepare($query);
         $stmt->execute([$dni, $hoy]);
