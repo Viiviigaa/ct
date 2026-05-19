@@ -453,7 +453,7 @@ try {
                                 <span class="current-label">Plan actual</span>
                             <?php endif; ?>
                             <div class="plan-name">Plan Business</div>
-                            <div class="plan-price">24,99 €<span> /mes</span></div>
+                            <div class="plan-price">74,99 €<span> /mes</span></div>
                             <div class="plan-desc">Para equipos y empresas que necesitan lo mejor.</div>
                             <hr class="plan-divider">
                             <ul class="feature-list">
@@ -466,7 +466,7 @@ try {
                             <?php if($rolActual == 'business'): ?>
                                 <button class="plan-btn current" disabled>Plan actual</button>
                             <?php else: ?>
-                                <button class="plan-btn" onclick="openModal('Plan Business', '24,99 €/mes')">Suscribirse</button>
+                                <button class="plan-btn" onclick="openModal('Plan Business', '74,99 €/mes')">Suscribirse</button>
                             <?php endif; ?>
                         </div>
 
