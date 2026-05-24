@@ -28,7 +28,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
     $precio = $_POST['precio'] ?? null;
     $descrip = $_POST['descripcion'] ?? null;
     $imagen = $_POST['imagen'] ?? null; 
-    $lugar = $_POST['lugar'] ?? null;
+    $lugar = $_POST['destinos'] ?? null;
     if($titulo != null && $tipoActividad != null && $precio != null && $descrip != null && $imagen != null){
         insertarRecomendacion($titulo, $descrip, $imagen, $precio, $lugar, $tipoActividad);
     }

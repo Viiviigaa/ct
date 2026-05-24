@@ -85,6 +85,8 @@ ini_set('display_errors', 1);
             $errores["dni"] = "<h6 style='color:red'>El DNI es obligatorio</h6>";
         }elseif (strlen($dni) != 9){
             $errores["dni"] = "<h6 style='color:red'>El DNI debe de tener 9 caracteres</h6>";
+        }else if (!preg_match('/^[0-9]{8}[A-Za-z]$/', $dni)) {
+            $errores["dni"] = "<h6 style='color:red'>El DNI debe de tener 8 números y 1 letra</h6>";
         }
 
         if (empty($fechaNac)) {
