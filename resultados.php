@@ -1,9 +1,9 @@
 <?php
 if (!ob_start("ob_gzhandler")) ob_start();
 
-ini_set('display_errors', 1);
-ini_set('memory_limit', '512M');
-error_reporting(E_ALL);
+//ini_set('display_errors', 1);
+//ini_set('memory_limit', '512M');
+//error_reporting(E_ALL);
 
 $origen      = $_GET['origen']       ?? 'MAD';
 $destinoIATA = $_GET['destino']      ?? 'LPA';

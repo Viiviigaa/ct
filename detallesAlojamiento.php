@@ -4,8 +4,8 @@ include 'mostrarAlojamientos.php';
 include 'google_config.php';
 include 'login.php';
 session_start();
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
+//error_reporting(E_ALL);
+//ini_set('display_errors', 1);
 
 
 
